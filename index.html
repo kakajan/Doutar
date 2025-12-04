@@ -1426,14 +1426,33 @@
 
         animate() {
           this.ctx.clearRect(0, 0, this.width, this.height)
+
+          let energy = 0
+          if (typeof audioMotion !== 'undefined' && audioMotion) {
+            energy = audioMotion.getEnergy()
+          }
+
           this.particles.forEach((p) => {
-            p.y += p.speedY
+            // Audio Reactivity
+            let moveY = p.speedY
+            let drawSize = p.size
+
+            if (energy > 0) {
+              // Move faster upwards with beat
+              moveY *= 1 + energy * 4
+              // Pulse size
+              drawSize *= 1 + energy * 1.5
+              // Horizontal jitter
+              p.x += (Math.random() - 0.5) * energy * 2
+            }
+
+            p.y += moveY
             p.life--
             p.opacity -= 0.002
             if (p.life < 0 || p.opacity <= 0) this.resetParticle(p)
 
             this.ctx.beginPath()
-            this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+            this.ctx.arc(p.x, p.y, drawSize, 0, Math.PI * 2)
             this.ctx.fillStyle = `rgba(${p.color}, ${p.opacity})`
             this.ctx.fill()
           })
