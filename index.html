@@ -26,7 +26,7 @@
     />
     <meta
       property="og:image"
-      content="https://doutar.ir/assets/img/music-cover.jpg"
+      content="https://doutar.ir/assets/img/cover.webp"
     />
     <meta property="og:locale" content="fa_IR" />
 
@@ -39,10 +39,10 @@
     />
     <meta
       property="twitter:image"
-      content="https://doutar.ir/assets/img/music-cover.jpg"
+      content="https://doutar.ir/assets/img/cover.webp"
     />
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./dist/output.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -51,26 +51,6 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Vazirmatn:wght@100..900&display=swap"
       rel="stylesheet"
     />
-
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              gold: '#D4AF37',
-              'dark-gold': '#B4941F',
-              'sand-light': '#F9F7F2',
-              'sand-dark': '#EBE5CE',
-              'deep-black': '#1a1a1a',
-            },
-            fontFamily: {
-              epic: ['Cinzel', 'serif'],
-              body: ['Vazirmatn', 'sans-serif'],
-            },
-          },
-        },
-      }
-    </script>
 
     <style>
       body {
@@ -181,12 +161,9 @@
         flex: 1;
         background-color: #d4af37;
         border-radius: 2px 2px 0 0;
-        height: 10%;
+        height: 5%;
         opacity: 0.3;
-        transition: height 0.2s ease;
-      }
-      .playing .viz-bar-bg {
-        animation: bounce-bg 0.6s infinite ease-in-out alternate;
+        transition: height 0.1s linear;
       }
 
       /* Full Screen Visualizer */
@@ -194,38 +171,13 @@
         flex: 1;
         background-color: rgba(255, 255, 255, 0.1);
         border-radius: 4px 4px 0 0;
-        height: 10%;
-        transition: height 0.2s ease;
+        height: 5%;
+        transition: height 0.1s linear;
         max-width: 20px;
       }
       .fs-playing .fs-viz-bar {
-        animation: bounce-fs 0.6s infinite ease-in-out alternate;
         background-color: rgba(212, 175, 55, 0.3);
-      }
-
-      @keyframes bounce-bg {
-        0% {
-          transform: scaleY(0.2);
-          opacity: 0.1;
-        }
-        100% {
-          transform: scaleY(1);
-          opacity: 0.4;
-        }
-      }
-
-      @keyframes bounce-fs {
-        0% {
-          height: 5%;
-          opacity: 0.3;
-        }
-        100% {
-          height: 60%;
-          opacity: 0.8;
-        }
-      }
-
-      /* Utils */
+      } /* Utils */
       .text-gradient-gold {
         background: linear-gradient(to bottom, #d4af37, #8a6e2f);
         -webkit-background-clip: text;
@@ -284,7 +236,7 @@
           id="hero-desc"
         >
           تجربه‌ای شنیداری از تلفیق سنت و مدرنیته. <br />
-          بازآفرینی اشعار <span class="font-bold text-black">مختومقلی</span> با
+          بازآفرینی اشعار <a href="https://fa.wikipedia.org/wiki/%D9%85%D8%AE%D8%AA%D9%88%D9%85%E2%80%8C%D9%82%D9%84%DB%8C_%D9%81%D8%B1%D8%A7%D8%BA%DB%8C" target="_blank" class="font-bold text-black">مختومقلی فراغی</a> با
           تکنولوژی هوش مصنوعی.
         </p>
         <div class="pt-10" id="hero-btn">
@@ -567,6 +519,12 @@
         style="background-image: url('assets/img/music-cover.jpg')"
       ></div>
 
+      <!-- Dynamic Pulse Background -->
+      <div
+        id="fs-pulse-bg"
+        class="absolute inset-0 z-0 pointer-events-none mix-blend-screen opacity-50 transition-opacity duration-300"
+      ></div>
+
       <!-- Full Screen Visualizer -->
       <div
         id="fs-viz-container"
@@ -712,9 +670,7 @@
             // Generate Visualizer Bars HTML (More bars for full width)
             let vizBars = ''
             for (let i = 0; i < 40; i++) {
-              const duration = (Math.random() * 0.4 + 0.3).toFixed(1) + 's'
-              const height = Math.floor(Math.random() * 60 + 20) + '%'
-              vizBars += `<div class="viz-bar-bg" style="animation-duration: ${duration}; height: ${height}"></div>`
+              vizBars += `<div class="viz-bar-bg"></div>`
             }
 
             // Important: Added id to span for duration update
@@ -722,7 +678,7 @@
             return `
                 <div class="glass-card rounded-2xl p-8 flex items-center gap-6 group music-item relative overflow-hidden" dir="ltr">
                     <!-- Background Visualizer -->
-                    <div class="absolute inset-0 flex items-end justify-between gap-0.5 opacity-0 group-[.playing]:opacity-10 pointer-events-none px-4 pb-0 transition-opacity duration-500">
+                    <div class="card-viz-container absolute inset-0 flex items-end justify-between gap-0.5 opacity-0 group-[.playing]:opacity-10 pointer-events-none px-4 pb-0 transition-opacity duration-500">
                         ${vizBars}
                     </div>
 
@@ -785,6 +741,7 @@
           audio.pause()
           resetUI(btnWrapperElement, card)
           updateStickyPlayBtn(false)
+          visualizerEngine.stop()
           return
         }
 
@@ -814,15 +771,27 @@
           initStickyPlayer(audioId)
           updateStickyPlayBtn(true)
 
+          // Start Visualizer
+          await initAudioMotion() // Ensure AudioMotion is initialized
+          if (audioMotion) {
+            // Disconnect previous if any (AudioMotion handles single source well, but let's be safe)
+            audioMotion.disconnectInput()
+            // Connect new audio element
+            audioMotion.connectInput(audio)
+          }
+          visualizerEngine.start(card.querySelector('.card-viz-container'))
+
           audio.onended = () => {
             resetUI(btnWrapperElement, card)
             updateStickyPlayBtn(false)
+            visualizerEngine.stop()
           }
           audio.onerror = (e) => {
             console.error('Playback error:', e)
             alert('مشکل در پخش فایل.')
             resetUI(btnWrapperElement, card)
             updateStickyPlayBtn(false)
+            visualizerEngine.stop()
           }
         } catch (err) {
           console.error('Audio Load Error:', err)
@@ -918,6 +887,11 @@
           if (currentAudio.paused) {
             currentAudio.play()
             updateStickyPlayBtn(true)
+            visualizerEngine.start(
+              currentBtnWrapper
+                .closest('.glass-card')
+                .querySelector('.card-viz-container')
+            )
             if (currentBtnWrapper) {
               const playIcon = currentBtnWrapper.querySelector('.play-icon')
               const pauseIcon = currentBtnWrapper.querySelector('.pause-icon')
@@ -928,6 +902,7 @@
           } else {
             currentAudio.pause()
             updateStickyPlayBtn(false)
+            visualizerEngine.stop()
             if (currentBtnWrapper) {
               resetUI(
                 currentBtnWrapper,
@@ -1081,37 +1056,139 @@
         isSeeking = false
       })
 
-      // --- 3.3. LOGIC: Full Screen Visualizer ---
-      const fsVizContainer = document.getElementById('fs-viz-container')
+      // --- 3.3. LOGIC: AudioMotion Visualizer ---
+      let AudioMotionAnalyzer = null
+      let audioMotion = null
 
+      async function initAudioMotion() {
+        if (audioMotion) return
+
+        if (!AudioMotionAnalyzer) {
+          const module = await import(
+            'https://cdn.skypack.dev/audiomotion-analyzer?min'
+          )
+          AudioMotionAnalyzer = module.default
+        }
+
+        const container = document.getElementById('fs-viz-container')
+        if (!container) return
+
+        // Clear existing fake bars
+        container.innerHTML = ''
+
+        audioMotion = new AudioMotionAnalyzer(container, {
+          source: undefined, // Will be connected dynamically
+          height: container.clientHeight,
+          mode: 2, // 1/2 octave bands
+          barSpace: 0.6,
+          ledBars: false,
+          gradient: 'classic', // classic, prism, rainbow
+          showScaleX: false,
+          showScaleY: false,
+          spinSpeed: 0,
+          overlay: true,
+          showPeaks: true,
+          smoothing: 0.7,
+          frequencyScale: 'log', // logarithmic frequency scale
+        })
+
+        // Custom Gradient
+        audioMotion.registerGradient('gold', {
+          bgColor: 'transparent',
+          dir: 'v',
+          colorStops: [
+            { pos: 0, color: 'rgba(212, 175, 55, 0.1)' },
+            { pos: 0.5, color: 'rgba(212, 175, 55, 0.6)' },
+            { pos: 1, color: '#fff' },
+          ],
+        })
+        audioMotion.setOptions({ gradient: 'gold' })
+      }
+
+      // Replaces the old visualizerEngine
+      const visualizerEngine = {
+        active: false,
+        bgContainer: document.getElementById('fs-pulse-bg'),
+        currentCardViz: null,
+
+        start(cardVizContainer) {
+          this.currentCardViz = cardVizContainer
+          // Ensure AudioMotion is running
+          if (audioMotion && currentAudio) {
+            if (audioMotion.audioCtx.state === 'suspended') {
+              audioMotion.audioCtx.resume()
+            }
+          }
+        },
+
+        stop() {
+          if (this.bgContainer) this.bgContainer.style.background = 'none'
+          if (this.currentCardViz) {
+            const bars = this.currentCardViz.children
+            for (let i = 0; i < bars.length; i++) {
+              bars[i].style.height = '5%'
+            }
+            this.currentCardViz = null
+          }
+        },
+
+        updateBackground() {
+          if (!audioMotion) return
+
+          // 1. Update FS Background Pulse
+          if (this.bgContainer) {
+            const energy = audioMotion.getEnergy() // Returns 0-1 usually
+            if (energy > 0) {
+              const normalized = Math.min(energy * 2, 1)
+              const size = 40 + normalized * 60
+              const opacity = 0.2 + normalized * 0.4
+
+              this.bgContainer.style.background = `radial-gradient(circle at center, rgba(212, 175, 55, ${opacity}) 0%, rgba(100, 50, 0, ${
+                opacity * 0.5
+              }) ${size * 0.6}%, transparent ${size}%)`
+            } else {
+              this.bgContainer.style.background = 'none'
+            }
+          }
+
+          // 2. Update Card Visualizer Bars
+          if (this.currentCardViz) {
+            const bars = this.currentCardViz.children
+            const vizData = audioMotion.getBars()
+
+            if (vizData && vizData.length > 0) {
+              for (let i = 0; i < bars.length; i++) {
+                // Map i (0..39) to vizData index
+                const index = Math.floor((i / bars.length) * vizData.length)
+                const barData = vizData[index]
+                const value = barData ? barData.value : 0 // value is 0..1
+
+                // Update height (min 5%, max 100%)
+                bars[i].style.height = `${Math.max(5, value * 100)}%`
+              }
+            }
+          }
+        },
+      }
+
+      // Hook into animation loop for background pulse
+      function animateBackgroundLoop() {
+        visualizerEngine.updateBackground()
+        requestAnimationFrame(animateBackgroundLoop)
+      }
+      animateBackgroundLoop()
+
+      // Initialize FS Viz Bars (Static) - REMOVED, handled by AudioMotion
       function initFSVisualizer() {
-        if (!fsVizContainer) return
-        let bars = ''
-        for (let i = 0; i < 60; i++) {
-          const duration = (Math.random() * 0.4 + 0.3).toFixed(1) + 's'
-          const height = Math.floor(Math.random() * 40 + 10) + '%'
-          bars += `<div class="fs-viz-bar" style="animation-duration: ${duration}; height: ${height}"></div>`
-        }
-        fsVizContainer.innerHTML = bars
+        // No-op
       }
-
-      function toggleFSVisualizer(isPlaying) {
-        if (isPlaying) {
-          fsVizContainer.classList.add('fs-playing')
-        } else {
-          fsVizContainer.classList.remove('fs-playing')
-        }
-      }
-
-      // Initialize FS Viz
       initFSVisualizer()
 
-      // Update togglePlay to sync FS Viz
-      const originalUpdateStickyPlayBtn = updateStickyPlayBtn
-      updateStickyPlayBtn = function (isPlaying) {
-        originalUpdateStickyPlayBtn(isPlaying)
-        toggleFSVisualizer(isPlaying)
-      }
+      // Update togglePlay to use Engine
+      const originalTogglePlay = togglePlay
+      // We need to override or inject into togglePlay.
+      // Since togglePlay is defined above, we can modify it directly or wrap it.
+      // But togglePlay is async and complex. Let's modify the original function in the file instead of wrapping.
 
       // --- 4. LOGIC: Navbar Scroll ---
       window.addEventListener('scroll', () => {
