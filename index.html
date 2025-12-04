@@ -168,6 +168,45 @@
         animation: slowZoom 20s ease-in-out infinite alternate;
       }
 
+      /* Play Button Dust Effect */
+      .play-btn-dust-container {
+        position: absolute;
+        inset: -20px;
+        border-radius: 9999px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .play-btn-dust {
+        position: absolute;
+        bottom: 50%; /* Start from center/bottom */
+        width: 3px;
+        height: 3px;
+        background: #d4af37;
+        border-radius: 50%;
+        opacity: 0;
+      }
+      .glass-card:hover .play-btn-dust,
+      .glass-card.playing .play-btn-dust,
+      #fs-play-btn:hover .play-btn-dust,
+      #fs-play-btn.playing .play-btn-dust {
+        animation: dustUp 1.5s infinite ease-out;
+      }
+
+      @keyframes dustUp {
+        0% {
+          transform: translateY(0) translateX(0) scale(1);
+          opacity: 0;
+        }
+        20% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-50px) translateX(var(--tx, 0px)) scale(0);
+          opacity: 0;
+        }
+      }
+
       /* Visualizer */
       .viz-bar-bg {
         flex: 1;
@@ -228,21 +267,23 @@
       class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden z-10"
     >
       <!-- Artistic Background Image -->
-      <div class="absolute inset-0 z-0 pointer-events-none select-none">
+      <div
+        class="absolute inset-0 z-0 pointer-events-none select-none md:inset-auto md:top-12 md:left-12 md:w-[40vw] md:h-[80vh]"
+      >
         <img
           src="assets/img/magtymguly.webp"
           alt="Magtymguly Pyragy"
-          class="w-full h-full object-cover object-top opacity-20 mix-blend-multiply grayscale contrast-125 animate-slow-zoom"
+          class="w-full h-full object-cover object-top opacity-20 mix-blend-multiply grayscale contrast-125 animate-slow-zoom rounded-b-full md:rounded-none"
           style="
             -webkit-mask-image: radial-gradient(
               circle at 50% 25%,
               black 0%,
-              transparent 55%
+              transparent 70%
             );
             mask-image: radial-gradient(
               circle at 50% 25%,
               black 0%,
-              transparent 55%
+              transparent 70%
             );
           "
         />
@@ -565,6 +606,12 @@
         class="absolute inset-0 z-0 pointer-events-none mix-blend-screen opacity-50 transition-opacity duration-300"
       ></div>
 
+      <!-- Full Screen Dust Canvas -->
+      <canvas
+        id="fs-dust-canvas"
+        class="absolute inset-0 z-0 pointer-events-none opacity-60"
+      ></canvas>
+
       <!-- Full Screen Visualizer -->
       <div
         id="fs-viz-container"
@@ -652,11 +699,39 @@
 
           <button
             id="fs-play-btn"
-            class="w-20 h-20 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] group"
+            class="w-20 h-20 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] group relative"
           >
-            <i
-              class="fas fa-play text-3xl ml-1 group-hover:text-dark-gold transition-colors"
-            ></i>
+            <!-- Dust Particles -->
+            <div class="play-btn-dust-container">
+              <div
+                class="play-btn-dust"
+                style="left: 20%; animation-delay: 0s; --tx: -10px"
+              ></div>
+              <div
+                class="play-btn-dust"
+                style="left: 50%; animation-delay: 0.5s; --tx: 5px"
+              ></div>
+              <div
+                class="play-btn-dust"
+                style="left: 80%; animation-delay: 1s; --tx: -5px"
+              ></div>
+              <div
+                class="play-btn-dust"
+                style="left: 35%; animation-delay: 0.2s; --tx: 10px"
+              ></div>
+              <div
+                class="play-btn-dust"
+                style="left: 65%; animation-delay: 0.7s; --tx: -8px"
+              ></div>
+            </div>
+            <div
+              id="fs-play-icon-wrapper"
+              class="relative z-10 flex items-center justify-center"
+            >
+              <i
+                class="fas fa-play text-3xl ml-1 group-hover:text-dark-gold transition-colors"
+              ></i>
+            </div>
           </button>
 
           <button
@@ -723,6 +798,14 @@
                     </div>
 
                     <div class="play-btn-wrapper w-16 h-16 shrink-0 cursor-pointer shadow-lg relative z-10" onclick="togglePlay('${track.id}', this)">
+                        <!-- Dust Particles -->
+                        <div class="play-btn-dust-container">
+                          <div class="play-btn-dust" style="left: 20%; animation-delay: 0s; --tx: -10px;"></div>
+                          <div class="play-btn-dust" style="left: 50%; animation-delay: 0.5s; --tx: 5px;"></div>
+                          <div class="play-btn-dust" style="left: 80%; animation-delay: 1s; --tx: -5px;"></div>
+                          <div class="play-btn-dust" style="left: 35%; animation-delay: 0.2s; --tx: 10px;"></div>
+                          <div class="play-btn-dust" style="left: 65%; animation-delay: 0.7s; --tx: -8px;"></div>
+                        </div>
                         <svg class="w-6 h-6 play-icon ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                         <svg class="w-6 h-6 pause-icon hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
                         <svg class="w-6 h-6 animate-spin loading-icon hidden text-gold" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -1063,11 +1146,14 @@
       }
 
       function updateFSPlayBtn(isPlaying) {
+        const iconWrapper = document.getElementById('fs-play-icon-wrapper')
         if (isPlaying) {
-          fsPlayBtn.innerHTML =
+          fsPlayBtn.classList.add('playing')
+          iconWrapper.innerHTML =
             '<i class="fas fa-pause text-3xl group-hover:text-dark-gold transition-colors"></i>'
         } else {
-          fsPlayBtn.innerHTML =
+          fsPlayBtn.classList.remove('playing')
+          iconWrapper.innerHTML =
             '<i class="fas fa-play text-3xl ml-1 group-hover:text-dark-gold transition-colors"></i>'
         }
       }
@@ -1282,64 +1368,84 @@
       })
 
       // --- 5. LOGIC: Particles ---
-      const canvas = document.getElementById('dust-canvas')
-      const ctx = canvas.getContext('2d')
-      let width,
-        height,
-        particles = []
+      class DustSystem {
+        constructor(canvasId, particleCount = 60) {
+          this.canvas = document.getElementById(canvasId)
+          if (!this.canvas) return
+          this.ctx = this.canvas.getContext('2d')
+          this.particleCount = particleCount
+          this.particles = []
+          this.width = 0
+          this.height = 0
 
-      function resize() {
-        width = canvas.width = window.innerWidth
-        height = canvas.height = window.innerHeight
-        initParticles()
-      }
-      window.addEventListener('resize', resize)
+          this.resize = this.resize.bind(this)
+          this.animate = this.animate.bind(this)
 
-      class Particle {
-        constructor() {
-          this.reset()
+          window.addEventListener('resize', this.resize)
+          this.resize()
+          this.animate()
         }
-        reset() {
-          this.x = Math.random() * width
-          this.y = Math.random() * height
-          this.size = Math.random() * 2
-          this.speedY = Math.random() * -0.5 - 0.1
-          this.opacity = Math.random() * 0.4
-          this.life = Math.random() * 100 + 50
-          this.color = Math.random() > 0.5 ? '212, 175, 55' : '100, 100, 100'
-        }
-        update() {
-          this.y += this.speedY
-          this.life--
-          this.opacity -= 0.002
-          if (this.life < 0 || this.opacity <= 0) this.reset()
-        }
-        draw() {
-          ctx.beginPath()
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`
-          ctx.fill()
-        }
-      }
 
-      function initParticles() {
-        particles = []
-        for (let i = 0; i < 60; i++) particles.push(new Particle())
-      }
-      function animateParticles() {
-        ctx.clearRect(0, 0, width, height)
-        particles.forEach((p) => {
-          p.update()
-          p.draw()
-        })
-        requestAnimationFrame(animateParticles)
+        resize() {
+          // Use offsetWidth/Height to respect container size if needed, or window for full screen
+          this.width = this.canvas.width = window.innerWidth
+          this.height = this.canvas.height = window.innerHeight
+          this.initParticles()
+        }
+
+        initParticles() {
+          this.particles = []
+          for (let i = 0; i < this.particleCount; i++) {
+            this.particles.push(this.createParticle())
+          }
+        }
+
+        createParticle() {
+          const p = {
+            x: 0,
+            y: 0,
+            size: 0,
+            speedY: 0,
+            opacity: 0,
+            life: 0,
+            color: '',
+          }
+          this.resetParticle(p)
+          return p
+        }
+
+        resetParticle(p) {
+          p.x = Math.random() * this.width
+          p.y = Math.random() * this.height
+          p.size = Math.random() * 2
+          p.speedY = Math.random() * -0.5 - 0.1
+          p.opacity = Math.random() * 0.4
+          p.life = Math.random() * 100 + 50
+          p.color = Math.random() > 0.5 ? '212, 175, 55' : '100, 100, 100'
+        }
+
+        animate() {
+          this.ctx.clearRect(0, 0, this.width, this.height)
+          this.particles.forEach((p) => {
+            p.y += p.speedY
+            p.life--
+            p.opacity -= 0.002
+            if (p.life < 0 || p.opacity <= 0) this.resetParticle(p)
+
+            this.ctx.beginPath()
+            this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+            this.ctx.fillStyle = `rgba(${p.color}, ${p.opacity})`
+            this.ctx.fill()
+          })
+          requestAnimationFrame(this.animate)
+        }
       }
 
       // Initializer
       document.addEventListener('DOMContentLoaded', () => {
         renderTracks()
-        resize()
-        animateParticles()
+        new DustSystem('dust-canvas', 60)
+        new DustSystem('fs-dust-canvas', 80) // More particles for the focused view
       })
     </script>
 
