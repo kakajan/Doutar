@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" class="scroll-smooth">
+<html lang="fa" dir="rtl" translate="no" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,6 +19,9 @@
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#F9F7F2" />
 
+    <!-- Prevent automatic machine translation for Persian content -->
+    <meta name="google" content="notranslate" />
+
     <meta property="og:type" content="music.album" />
     <meta property="og:url" content="https://doutar.ir" />
     <meta property="og:title" content="میراث صحرا | Magtymguly Pyragy" />
@@ -30,8 +33,6 @@
       property="og:image"
       content="https://doutar.ir/assets/img/cover.webp"
     />
-    <meta property="og:locale" content="fa_IR" />
-
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://doutar.ir" />
     <meta property="twitter:title" content="میراث صحرا | Magtymguly Pyragy" />
@@ -93,6 +94,17 @@
           );
         z-index: -2;
         pointer-events: none;
+      }
+
+      /* Keep hero/cta hidden until animations start */
+      .hero-prehide {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      /* Fully hide elements until reveal */
+      .hero-hidden {
+        display: none !important;
       }
 
       #dust-canvas {
@@ -252,6 +264,7 @@
       } /* Utils */
       .text-gradient-gold {
         background: linear-gradient(to bottom, #d4af37, #8a6e2f);
+        background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
@@ -537,7 +550,7 @@
     <canvas id="dust-canvas"></canvas>
 
     <nav
-      class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center transition-all duration-300 ease-in-out"
+      class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center transition-all duration-300 ease-in-out hero-prehide hero-hidden"
       id="navbar"
     >
       <div class="text-xl font-bold tracking-[0.2em] font-epic text-black/90">
@@ -552,7 +565,8 @@
     </nav>
 
     <header
-      class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden z-10"
+      id="hero-section"
+      class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden z-10 hero-prehide hero-hidden"
     >
       <!-- Artistic Background Image -->
       <div class="absolute inset-0 z-0 pointer-events-none select-none">
@@ -581,13 +595,13 @@
 
       <div class="space-y-6 relative z-20">
         <h2
-          class="text-dark-gold tracking-[0.5em] text-xs md:text-sm font-epic uppercase font-bold"
+          class="text-dark-gold tracking-[0.5em] text-xs md:text-sm font-epic uppercase font-bold hero-prehide hero-hidden"
           id="hero-subtitle"
         >
           Magtymguly Pyragy
         </h2>
         <h1
-          class="text-7xl md:text-9xl font-black leading-tight font-epic text-neutral-900 drop-shadow-sm"
+          class="text-7xl md:text-9xl font-black leading-tight font-epic text-neutral-900 drop-shadow-sm hero-prehide hero-hidden"
           id="hero-title"
         >
           <span class="block text-gradient-gold">MIRAS</span>
@@ -600,7 +614,7 @@
         </h1>
 
         <p
-          class="max-w-2xl mx-auto text-neutral-600 text-base md:text-lg leading-loose font-light pt-6 px-4 text-justify md:text-center"
+          class="max-w-2xl mx-auto text-neutral-600 text-base md:text-lg leading-loose font-light pt-6 px-4 text-justify md:text-center hero-prehide hero-hidden"
           id="hero-desc"
         >
           سفری شنیداری از دلِ تاریخ تا اوجِ مدرنیته.
@@ -617,7 +631,7 @@
           <strong>الکترونیک و سینماتیک</strong> در می‌آمیزد.
         </p>
 
-        <div class="pt-10" id="hero-btn">
+        <div class="pt-10 hero-prehide hero-hidden" id="hero-btn">
           <a
             href="#music-hall"
             class="dust-btn group relative inline-flex items-center justify-center px-10 py-4 text-sm font-bold text-white transition-all duration-300 bg-black rounded-full hover:bg-gold hover:shadow-xl hover:shadow-gold/30"
@@ -900,7 +914,7 @@
 
     <footer
       id="download"
-      class="py-20 text-center relative z-10 bg-gradient-to-t from-black/5 to-transparent"
+      class="py-20 text-center relative z-10 bg-linear-to-t from-black/5 to-transparent"
     >
       <div class="container mx-auto px-4" id="footer-content">
         <a
@@ -939,6 +953,7 @@
             href="https://www.linkedin.com/in/usher-ir"
             target="_blank"
             class="text-neutral-400 hover:text-gold transition-colors duration-300"
+            aria-label="LinkedIn profile"
           >
             <i class="fab fa-linkedin text-2xl"></i>
           </a>
@@ -946,6 +961,7 @@
             href="https://github.com/kakajan"
             target="_blank"
             class="text-neutral-400 hover:text-gold transition-colors duration-300"
+            aria-label="GitHub profile"
           >
             <i class="fab fa-github text-2xl"></i>
           </a>
@@ -953,6 +969,7 @@
             href="https://www.instagram.com/usher_vocal"
             target="_blank"
             class="text-neutral-400 hover:text-gold transition-colors duration-300"
+            aria-label="Instagram profile"
           >
             <i class="fab fa-instagram text-2xl"></i>
           </a>
@@ -960,6 +977,7 @@
             href="https://t.me/usher_art"
             target="_blank"
             class="text-neutral-400 hover:text-gold transition-colors duration-300"
+            aria-label="Telegram channel"
           >
             <i class="fab fa-telegram text-2xl"></i>
           </a>
@@ -995,7 +1013,7 @@
           <!-- Track Info -->
           <div class="flex items-center gap-3 w-1/3 md:w-1/4 min-w-0">
             <div
-              class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-neutral-200 overflow-hidden flex-shrink-0 relative group"
+              class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-neutral-200 overflow-hidden shrink-0 relative group"
             >
               <img
                 src="assets/img/music-cover.webp"
@@ -1127,7 +1145,7 @@
     <!-- Full Screen Player Overlay -->
     <div
       id="fs-player"
-      class="fixed inset-0 z-[60] bg-neutral-900/95 backdrop-blur-3xl flex flex-col items-center justify-center transition-all duration-500 translate-y-full opacity-0 invisible"
+      class="fixed inset-0 z-60 bg-neutral-900/95 backdrop-blur-3xl flex flex-col items-center justify-center transition-all duration-500 translate-y-full opacity-0 invisible"
       dir="ltr"
     >
       <!-- Background Image (Blurred) -->
@@ -1364,7 +1382,7 @@
                         <p class="text-xs text-neutral-500 font-light">${track.subtitle}</p>
                     </div>
 
-                    <a href="${track.file}" class="text-neutral-400 hover:text-black transition-colors relative z-10 cursor-pointer" download>
+                    <a href="${track.file}" class="text-neutral-400 hover:text-black transition-colors relative z-10 cursor-pointer" download aria-label="Download ${track.title}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     </a>
                     
@@ -2054,9 +2072,37 @@
 
     <script type="module">
       // Defer animations until after first interaction (or a late fallback) to keep LCP critical path clean
+      const ANIMATION_DEADLINE_MS = 2000 // if users have been on the page for a while, skip hero entrance to avoid sudden flicker
+      const shouldAnimate = performance.now() < ANIMATION_DEADLINE_MS
+      const heroTargets = [
+        '#navbar',
+        '#hero-section',
+        '#hero-subtitle',
+        '#hero-title',
+        '#hero-desc',
+        '#hero-btn',
+      ]
       let animationsScheduled = false
 
+      const revealHeroInstant = () => {
+        heroTargets.forEach((selector) => {
+          const el = document.querySelector(selector)
+          if (!el) return
+          el.classList.remove('hero-prehide', 'hero-hidden')
+          el.style.display = ''
+          el.style.opacity = '1'
+          el.style.visibility = 'visible'
+        })
+      }
+
       const initAnimations = async () => {
+        if (!shouldAnimate) {
+          revealHeroInstant()
+          return
+        }
+
+        revealHeroInstant()
+
         const { animate, scroll, stagger, inView } = await import(
           './assets/js/motion.js'
         )
@@ -2130,8 +2176,8 @@
       window.addEventListener('scroll', scheduleOnce, { passive: true })
       window.addEventListener('keydown', scheduleOnce)
 
-      // Safety: load animations after a delay in case no interaction occurs
-      setTimeout(scheduleAnimations, 4000)
+      // Safety: load animations after a short delay in case no interaction occurs
+      setTimeout(scheduleAnimations, 1200)
     </script>
   </body>
 </html>
