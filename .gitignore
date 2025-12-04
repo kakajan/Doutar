@@ -1,6 +1,5 @@
 # Node, build and OS files
 node_modules/
-dist/
 build/
 .env
 .DS_Store

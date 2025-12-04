@@ -156,6 +156,18 @@
         }
       }
 
+      @keyframes slowZoom {
+        0% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1.15);
+        }
+      }
+      .animate-slow-zoom {
+        animation: slowZoom 20s ease-in-out infinite alternate;
+      }
+
       /* Visualizer */
       .viz-bar-bg {
         flex: 1;
@@ -215,6 +227,27 @@
     <header
       class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden z-10"
     >
+      <!-- Artistic Background Image -->
+      <div class="absolute inset-0 z-0 pointer-events-none select-none">
+        <img
+          src="assets/img/magtymguly.webp"
+          alt="Magtymguly Pyragy"
+          class="w-full h-full object-cover object-top opacity-20 mix-blend-multiply grayscale contrast-125 animate-slow-zoom"
+          style="
+            -webkit-mask-image: radial-gradient(
+              circle at 50% 25%,
+              black 0%,
+              transparent 55%
+            );
+            mask-image: radial-gradient(
+              circle at 50% 25%,
+              black 0%,
+              transparent 55%
+            );
+          "
+        />
+      </div>
+
       <div class="space-y-6 relative z-20">
         <h2
           class="text-dark-gold tracking-[0.5em] text-xs md:text-sm font-epic uppercase font-bold"
@@ -377,7 +410,7 @@
         </div>
 
         <div
-          class="mt-16 text-[10px] text-neutral-400 font-epic tracking-widest uppercase"
+          class="mt-16 mb-35 text-[10px] text-neutral-400 font-epic tracking-widest uppercase"
         >
           AYTRONIC © 2025 | Created by x-dev
         </div>
@@ -391,7 +424,7 @@
       dir="ltr"
     >
       <div
-        class="bg-white/80 backdrop-blur-xl border-t border-white/20 shadow-[0_-4px_30px_rgba(0,0,0,0.1)] px-4 py-3 md:py-4"
+        class="bg-white/30 backdrop-blur-xl border-t border-white/20 shadow-[0_-4px_30px_rgba(0,0,0,0.1)] px-4 py-3 md:py-4"
       >
         <div class="container mx-auto max-w-5xl flex items-center gap-4">
           <!-- Track Info -->
@@ -637,8 +670,8 @@
     </div>
 
     <script>
-      // --- 1. DATA: Generate 28 Tracks Automatically ---
-      const trackData = Array.from({ length: 28 }, (_, i) => {
+      // --- 1. DATA: Generate 27 Tracks Automatically ---
+      const trackData = Array.from({ length: 27 }, (_, i) => {
         const num = (i + 1).toString().padStart(2, '0')
         return {
           id: `track${i + 1}`,
@@ -781,14 +814,33 @@
           // Start Visualizer
           await initAudioMotion() // Ensure AudioMotion is initialized
           if (audioMotion) {
-            // Disconnect previous if any (AudioMotion handles single source well, but let's be safe)
+            // Disconnect previous if any
             audioMotion.disconnectInput()
-            // Connect new audio element
-            audioMotion.connectInput(audio)
+
+            // Use cached source node or create new one
+            let source = audioSourceMap.get(audio)
+            if (!source) {
+              source = audioMotion.audioCtx.createMediaElementSource(audio)
+              audioSourceMap.set(audio, source)
+            }
+            audioMotion.connectInput(source)
           }
           visualizerEngine.start(card.querySelector('.card-viz-container'))
 
           audio.onended = () => {
+            // Auto-play next track
+            const currentIndex = trackData.findIndex((t) => t.id === audioId)
+            if (currentIndex < trackData.length - 1) {
+              const nextTrack = trackData[currentIndex + 1]
+              const nextBtnWrapper = document.querySelector(
+                `[onclick="togglePlay('${nextTrack.id}', this)"]`
+              )
+              if (nextBtnWrapper) {
+                nextBtnWrapper.click()
+                return
+              }
+            }
+
             resetUI(btnWrapperElement, card)
             updateStickyPlayBtn(false)
             visualizerEngine.stop()
@@ -1066,50 +1118,60 @@
       // --- 3.3. LOGIC: AudioMotion Visualizer ---
       let AudioMotionAnalyzer = null
       let audioMotion = null
+      let audioMotionInitPromise = null
+      const audioSourceMap = new WeakMap()
 
       async function initAudioMotion() {
-        if (audioMotion) return
+        if (audioMotion) return audioMotion
+        if (audioMotionInitPromise) return audioMotionInitPromise
 
-        if (!AudioMotionAnalyzer) {
-          const module = await import(
-            'https://cdn.skypack.dev/audiomotion-analyzer?min'
-          )
-          AudioMotionAnalyzer = module.default
-        }
+        audioMotionInitPromise = (async () => {
+          if (!AudioMotionAnalyzer) {
+            const module = await import(
+              'https://cdn.skypack.dev/audiomotion-analyzer?min'
+            )
+            AudioMotionAnalyzer = module.default
+          }
 
-        const container = document.getElementById('fs-viz-container')
-        if (!container) return
+          const container = document.getElementById('fs-viz-container')
+          if (!container) return null
 
-        // Clear existing fake bars
-        container.innerHTML = ''
+          // Clear existing fake bars
+          container.innerHTML = ''
 
-        audioMotion = new AudioMotionAnalyzer(container, {
-          source: undefined, // Will be connected dynamically
-          height: container.clientHeight,
-          mode: 2, // 1/2 octave bands
-          barSpace: 0.6,
-          ledBars: false,
-          gradient: 'classic', // classic, prism, rainbow
-          showScaleX: false,
-          showScaleY: false,
-          spinSpeed: 0,
-          overlay: true,
-          showPeaks: true,
-          smoothing: 0.7,
-          frequencyScale: 'log', // logarithmic frequency scale
-        })
+          const instance = new AudioMotionAnalyzer(container, {
+            source: undefined, // Will be connected dynamically
+            height: container.clientHeight,
+            mode: 2, // 1/2 octave bands
+            barSpace: 0.6,
+            ledBars: false,
+            gradient: 'classic', // classic, prism, rainbow
+            showScaleX: false,
+            showScaleY: false,
+            spinSpeed: 0,
+            overlay: true,
+            showPeaks: true,
+            smoothing: 0.7,
+            frequencyScale: 'log', // logarithmic frequency scale
+          })
 
-        // Custom Gradient
-        audioMotion.registerGradient('gold', {
-          bgColor: 'transparent',
-          dir: 'v',
-          colorStops: [
-            { pos: 0, color: 'rgba(212, 175, 55, 0.1)' },
-            { pos: 0.5, color: 'rgba(212, 175, 55, 0.6)' },
-            { pos: 1, color: '#fff' },
-          ],
-        })
-        audioMotion.setOptions({ gradient: 'gold' })
+          // Custom Gradient
+          instance.registerGradient('gold', {
+            bgColor: 'transparent',
+            dir: 'v',
+            colorStops: [
+              { pos: 0, color: 'rgba(212, 175, 55, 0.1)' },
+              { pos: 0.5, color: 'rgba(212, 175, 55, 0.6)' },
+              { pos: 1, color: '#fff' },
+            ],
+          })
+          instance.setOptions({ gradient: 'gold' })
+
+          return instance
+        })()
+
+        audioMotion = await audioMotionInitPromise
+        return audioMotion
       }
 
       // Replaces the old visualizerEngine
