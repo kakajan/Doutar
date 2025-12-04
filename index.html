@@ -2053,7 +2053,9 @@
     </script>
 
     <script type="module">
-      // Defer animations until page is interactive
+      // Defer animations until after first interaction (or a late fallback) to keep LCP critical path clean
+      let animationsScheduled = false
+
       const initAnimations = async () => {
         const { animate, scroll, stagger, inView } = await import(
           './assets/js/motion.js'
@@ -2101,12 +2103,35 @@
         })
       }
 
-      // Use requestIdleCallback if available, otherwise setTimeout
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(initAnimations)
-      } else {
-        setTimeout(initAnimations, 1)
+      const scheduleAnimations = () => {
+        if (animationsScheduled) return
+        animationsScheduled = true
+        const defer = () => {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => initAnimations())
+          } else {
+            setTimeout(initAnimations, 300)
+          }
+        }
+        defer()
       }
+
+      // Trigger on first user intent to interact; long fallback keeps experience intact
+      const scheduleOnce = () => {
+        scheduleAnimations()
+        window.removeEventListener('pointerdown', scheduleOnce)
+        window.removeEventListener('touchstart', scheduleOnce)
+        window.removeEventListener('scroll', scheduleOnce)
+        window.removeEventListener('keydown', scheduleOnce)
+      }
+
+      window.addEventListener('pointerdown', scheduleOnce, { passive: true })
+      window.addEventListener('touchstart', scheduleOnce, { passive: true })
+      window.addEventListener('scroll', scheduleOnce, { passive: true })
+      window.addEventListener('keydown', scheduleOnce)
+
+      // Safety: load animations after a delay in case no interaction occurs
+      setTimeout(scheduleAnimations, 4000)
     </script>
   </body>
 </html>
