@@ -68,6 +68,7 @@
     --default-mono-font-family: var(--font-mono);
     --color-gold: #D4AF37;
     --color-dark-gold: #B4941F;
+    --color-sand-light: #F9F7F2;
     --font-epic: Cinzel, serif;
     --font-body: Vazirmatn, sans-serif;
   }
@@ -1360,6 +1361,19 @@
       line-height: var(--tw-leading, var(--text-xs--line-height));
     }
   }
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-sand-light);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dark-gold);
 }
 @property --tw-translate-x {
   syntax: "*";
