@@ -242,9 +242,85 @@
       html {
         scroll-behavior: smooth;
       }
+
+      /* Preloader */
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #1a1a1a;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+      }
+      .loader-wave {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        height: 60px;
+        gap: 8px;
+      }
+      .bar {
+        width: 8px;
+        height: 20px;
+        background-color: #d4af37;
+        animation: wave 1.2s ease-in-out infinite;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+      }
+      .bar:nth-child(1) { animation-delay: 0.0s; }
+      .bar:nth-child(2) { animation-delay: 0.1s; }
+      .bar:nth-child(3) { animation-delay: 0.2s; }
+      .bar:nth-child(4) { animation-delay: 0.3s; }
+      .bar:nth-child(5) { animation-delay: 0.4s; }
+      @keyframes wave {
+        0%, 100% { height: 20px; opacity: 0.5; }
+        50% { height: 60px; opacity: 1; }
+      }
+      .loader-text {
+        margin-top: 30px;
+        color: #d4af37;
+        font-family: 'Cinzel', serif;
+        font-size: 1.5rem;
+        letter-spacing: 4px;
+        opacity: 0;
+        animation: fadeIn 2s ease-in-out infinite alternate;
+        text-transform: uppercase;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0.4; text-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
+        to { opacity: 1; text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
+      }
+      body.loaded #preloader {
+        opacity: 0;
+        visibility: hidden;
+      }
     </style>
   </head>
   <body class="antialiased">
+    <!-- Preloader -->
+    <div id="preloader">
+      <div class="loader-wave">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <div class="loader-text">Miras Sahrasy</div>
+    </div>
+    <script>
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.body.classList.add('loaded');
+        }, 800);
+      });
+    </script>
     <div class="bg-mesh"></div>
     <canvas id="dust-canvas"></canvas>
 
@@ -267,13 +343,11 @@
       class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden z-10"
     >
       <!-- Artistic Background Image -->
-      <div
-        class="absolute inset-0 z-0 pointer-events-none select-none md:inset-auto md:top-12 md:left-12 md:w-[40vw] md:h-[80vh]"
-      >
+      <div class="absolute inset-0 z-0 pointer-events-none select-none">
         <img
           src="assets/img/magtymguly.webp"
           alt="Magtymguly Pyragy"
-          class="w-full h-full object-cover object-top opacity-20 mix-blend-multiply grayscale contrast-125 animate-slow-zoom rounded-b-full md:rounded-none"
+          class="w-full h-full object-cover object-top opacity-20 mix-blend-multiply grayscale contrast-125 animate-slow-zoom rounded-b-full md:rounded-none md:w-[40vw] md:h-[80vh] md:absolute md:top-12 md:left-12"
           style="
             -webkit-mask-image: radial-gradient(
               circle at 50% 25%,
@@ -474,7 +548,7 @@
               class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-neutral-200 overflow-hidden flex-shrink-0 relative group"
             >
               <img
-                src="assets/img/music-cover.jpg"
+                src="assets/img/music-cover.webp"
                 alt="Cover"
                 class="w-full h-full object-cover"
               />
@@ -559,7 +633,10 @@
 
           <!-- Volume / Extra (Hidden on mobile if needed) -->
           <div class="hidden md:flex items-center justify-end w-1/4 gap-2">
-            <i class="fas fa-volume-low text-neutral-400 text-xs"></i>
+            <i
+              id="volume-icon"
+              class="fas fa-volume-high text-neutral-400 text-xs"
+            ></i>
             <input
               type="range"
               id="player-volume"
@@ -597,7 +674,7 @@
       <!-- Background Image (Blurred) -->
       <div
         class="absolute inset-0 z-0 opacity-20 bg-cover bg-center blur-3xl scale-110"
-        style="background-image: url('assets/img/music-cover.jpg')"
+        style="background-image: url('assets/img/music-cover.webp')"
       ></div>
 
       <!-- Dynamic Pulse Background -->
@@ -637,7 +714,7 @@
           class="w-64 h-64 md:w-80 md:h-80 rounded-3xl shadow-2xl shadow-black/50 overflow-hidden mb-10 relative group ring-1 ring-white/10"
         >
           <img
-            src="assets/img/music-cover.jpg"
+            src="assets/img/music-cover.webp"
             alt="Cover"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
@@ -965,6 +1042,7 @@
       const playerNextBtn = document.getElementById('player-next')
       const playerSeek = document.getElementById('player-seek')
       const playerVolume = document.getElementById('player-volume')
+      const volumeIcon = document.getElementById('volume-icon')
       const playerCurrentTime = document.getElementById('player-current-time')
       const playerDuration = document.getElementById('player-duration')
       const progressFill = document.getElementById('progress-fill')
@@ -1071,8 +1149,22 @@
       })
 
       playerVolume.addEventListener('input', (e) => {
+        const vol = parseFloat(e.target.value)
         if (currentAudio) {
-          currentAudio.volume = e.target.value
+          currentAudio.volume = vol
+        }
+
+        volumeIcon.classList.remove(
+          'fa-volume-mute',
+          'fa-volume-low',
+          'fa-volume-high'
+        )
+        if (vol === 0) {
+          volumeIcon.classList.add('fa-volume-mute')
+        } else if (vol < 0.5) {
+          volumeIcon.classList.add('fa-volume-low')
+        } else {
+          volumeIcon.classList.add('fa-volume-high')
         }
       })
 

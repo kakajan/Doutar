@@ -589,6 +589,10 @@
   .rounded-lg {
     border-radius: var(--radius-lg);
   }
+  .rounded-b-full {
+    border-bottom-right-radius: calc(infinity * 1px);
+    border-bottom-left-radius: calc(infinity * 1px);
+  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
@@ -937,6 +941,9 @@
   .opacity-50 {
     opacity: 50%;
   }
+  .opacity-60 {
+    opacity: 60%;
+  }
   .opacity-75 {
     opacity: 75%;
   }
@@ -1228,6 +1235,21 @@
       }
     }
   }
+  .md\:absolute {
+    @media (width >= 48rem) {
+      position: absolute;
+    }
+  }
+  .md\:top-12 {
+    @media (width >= 48rem) {
+      top: calc(var(--spacing) * 12);
+    }
+  }
+  .md\:left-12 {
+    @media (width >= 48rem) {
+      left: calc(var(--spacing) * 12);
+    }
+  }
   .md\:block {
     @media (width >= 48rem) {
       display: block;
@@ -1263,6 +1285,11 @@
       height: calc(var(--spacing) * 80);
     }
   }
+  .md\:h-\[80vh\] {
+    @media (width >= 48rem) {
+      height: 80vh;
+    }
+  }
   .md\:w-1\/4 {
     @media (width >= 48rem) {
       width: calc(1/4 * 100%);
@@ -1288,6 +1315,11 @@
       width: calc(var(--spacing) * 80);
     }
   }
+  .md\:w-\[40vw\] {
+    @media (width >= 48rem) {
+      width: 40vw;
+    }
+  }
   .md\:grid-cols-2 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1306,6 +1338,11 @@
   .md\:gap-6 {
     @media (width >= 48rem) {
       gap: calc(var(--spacing) * 6);
+    }
+  }
+  .md\:rounded-none {
+    @media (width >= 48rem) {
+      border-radius: 0;
     }
   }
   .md\:py-4 {
