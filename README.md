@@ -11,6 +11,6 @@ gh repo create Doutar --public --source=. --remote=origin --push
 Or create an empty repo on GitHub and add remote manually:
 
 ```bash
-git remote add origin https://github.com/<your-username>/Doutar.git
+git remote add origin https://github.com/kakajan/Doutar.git
 git push -u origin main
 ```
