@@ -45,8 +45,7 @@
     />
 
     <link href="./dist/output.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./assets/css/fontawesome.min.css" />
-    <link href="./assets/fonts/fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/all.min.css" />
     <link
       rel="icon"
       type="image/png"
@@ -68,6 +67,11 @@
         color: #1a1a1a;
         font-family: 'Vazirmatn', sans-serif;
         overflow-x: hidden;
+      }
+
+      /* Accessibility: Improve contrast for neutral-500 text */
+      .text-neutral-500 {
+        color: #595959 !important;
       }
 
       /* Animated Background Mesh */
@@ -555,6 +559,10 @@
         <img
           src="assets/img/magtymguly.webp"
           alt="Magtymguly Pyragy"
+          width="1200"
+          height="1600"
+          loading="lazy"
+          decoding="async"
           class="w-full h-full object-cover object-top opacity-20 mix-blend-multiply grayscale contrast-125 animate-slow-zoom rounded-b-full md:rounded-none md:w-[40vw] md:h-[80vh] md:absolute md:top-12 md:left-12"
           style="
             -webkit-mask-image: radial-gradient(
@@ -967,9 +975,7 @@
             >AYTRONIC</a
           >
           | POWERED BY
-          <a
-            href="https://x-dev.org"
-            class="hover:text-gold transition-colors"
+          <a href="https://x-dev.org" class="hover:text-gold transition-colors"
             >X-DEV ACADEMY</a
           >
         </div>
@@ -994,6 +1000,10 @@
               <img
                 src="assets/img/music-cover.webp"
                 alt="Cover"
+                width="48"
+                height="48"
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover"
               />
               <div
@@ -1025,6 +1035,7 @@
               <button
                 id="player-prev"
                 class="text-neutral-400 hover:text-gold transition-colors cursor-pointer"
+                aria-label="Previous Track"
               >
                 <i class="fas fa-backward-step text-sm md:text-base"></i>
               </button>
@@ -1032,6 +1043,7 @@
               <button
                 id="player-play-btn"
                 class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-gold hover:text-black transition-all shadow-lg hover:scale-105 cursor-pointer"
+                aria-label="Play"
               >
                 <i class="fas fa-play text-xs md:text-sm ml-0.5"></i>
               </button>
@@ -1039,6 +1051,7 @@
               <button
                 id="player-next"
                 class="text-neutral-400 hover:text-gold transition-colors cursor-pointer"
+                aria-label="Next Track"
               >
                 <i class="fas fa-forward-step text-sm md:text-base"></i>
               </button>
@@ -1093,6 +1106,7 @@
             <button
               id="player-maximize"
               class="ml-4 text-neutral-400 hover:text-black transition-colors cursor-pointer"
+              aria-label="Maximize Player"
             >
               <i class="fas fa-expand text-sm"></i>
             </button>
@@ -1102,6 +1116,7 @@
           <button
             id="player-maximize-mobile"
             class="md:hidden text-neutral-400 hover:text-black transition-colors ml-2 cursor-pointer"
+            aria-label="Maximize Player"
           >
             <i class="fas fa-expand text-lg"></i>
           </button>
@@ -1145,6 +1160,7 @@
       <button
         id="fs-close-btn"
         class="absolute top-8 right-8 text-white/50 hover:text-white z-20 transition-colors p-2 cursor-pointer"
+        aria-label="Close Fullscreen Player"
       >
         <i class="fas fa-chevron-down text-3xl"></i>
       </button>
@@ -1160,6 +1176,10 @@
           <img
             src="assets/img/music-cover.webp"
             alt="Cover"
+            width="320"
+            height="320"
+            loading="lazy"
+            decoding="async"
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
         </div>
@@ -1214,6 +1234,7 @@
           <button
             id="fs-prev"
             class="text-white/60 hover:text-gold transition-colors text-3xl hover:scale-110 duration-200 cursor-pointer"
+            aria-label="Previous Track"
           >
             <i class="fas fa-backward-step"></i>
           </button>
@@ -1221,6 +1242,7 @@
           <button
             id="fs-play-btn"
             class="w-20 h-20 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] group relative cursor-pointer"
+            aria-label="Play"
           >
             <!-- Dust Particles -->
             <div class="play-btn-dust-container">
@@ -1258,6 +1280,7 @@
           <button
             id="fs-next"
             class="text-white/60 hover:text-gold transition-colors text-3xl hover:scale-110 duration-200 cursor-pointer"
+            aria-label="Next Track"
           >
             <i class="fas fa-forward-step"></i>
           </button>
@@ -1275,6 +1298,7 @@
           subtitle: `Aytronic`,
           file: `https://doutar.ir/assets/music/Track${i + 1}.mp3`, // مسیر فایل ها: track1.mp3 تا track28.mp3
           vizCount: Math.floor(Math.random() * 5) + 5, // تعداد خطوط ویژوالایزر رندوم
+          duration: 180, // Duration in seconds (3:00 as default)
         }
       })
 
@@ -1336,10 +1360,7 @@
                     </div>
                     
                     <div class="flex-1 relative z-10">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-lg font-bold text-neutral-900 group-hover:text-dark-gold transition-colors">${track.title}</h4>
-                            <span id="dur-${track.id}" class="text-[10px] bg-black/5 px-2 py-1 rounded text-neutral-500 font-mono">--:--</span>
-                        </div>
+                        <h4 class="text-lg font-bold text-neutral-900 group-hover:text-dark-gold transition-colors mb-2">${track.title}</h4>
                         <p class="text-xs text-neutral-500 font-light">${track.subtitle}</p>
                     </div>
 
@@ -1347,25 +1368,13 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     </a>
                     
-                    <audio id="${track.id}" preload="metadata" crossorigin="anonymous">
+                    <audio id="${track.id}" preload="none" crossorigin="anonymous">
                         <source src="${track.file}" type="audio/mpeg">
                     </audio>
                 </div>
                 `
           })
           .join('')
-
-        // --- Attach Metadata Listeners for Automatic Duration ---
-        trackData.forEach((track) => {
-          const audioEl = document.getElementById(track.id)
-          const durationSpan = document.getElementById(`dur-${track.id}`)
-
-          if (audioEl && durationSpan) {
-            audioEl.addEventListener('loadedmetadata', function () {
-              durationSpan.innerText = formatTime(this.duration)
-            })
-          }
-        })
       }
 
       // --- 3. LOGIC: Audio Player ---
@@ -2044,48 +2053,60 @@
     </script>
 
     <script type="module">
-      import { animate, scroll, stagger, inView } from './assets/js/motion.js'
+      // Defer animations until page is interactive
+      const initAnimations = async () => {
+        const { animate, scroll, stagger, inView } = await import(
+          './assets/js/motion.js'
+        )
 
-      animate('#navbar', { opacity: [0, 1], y: [-20, 0] }, { duration: 1 })
-      animate(
-        '#hero-subtitle',
-        { opacity: [0, 1], letterSpacing: ['0em', '0.5em'] },
-        { duration: 1.5, delay: 0.5 }
-      )
-      animate(
-        '#hero-title',
-        { opacity: [0, 1], scale: [0.95, 1], y: [20, 0] },
-        { duration: 1.2, delay: 0.8, easing: [0.17, 0.55, 0.55, 1] }
-      )
-      animate('#hero-desc', { opacity: [0, 1] }, { duration: 1, delay: 1.2 })
-      animate(
-        '#hero-btn',
-        { opacity: [0, 1], y: [20, 0] },
-        { duration: 0.8, delay: 1.4 }
-      )
-
-      // با توجه به اینکه ترک ها داینامیک لود می شوند، یک تاخیر کوتاه یا آبزرور نیاز است، اما inView معمولا درست کار میکند
-      inView('#music-grid', ({ target }) => {
+        animate('#navbar', { opacity: [0, 1], y: [-20, 0] }, { duration: 1 })
         animate(
-          target.querySelectorAll('.music-item'),
-          { opacity: [0, 1], y: [30, 0] },
-          { duration: 0.6, delay: stagger(0.15) }
+          '#hero-subtitle',
+          { opacity: [0, 1], letterSpacing: ['0em', '0.5em'] },
+          { duration: 1.5, delay: 0.5 }
         )
-      })
-
-      document.querySelectorAll('.lyric-line').forEach((line) => {
-        scroll(
-          animate(line, {
-            color: ['#d4d4d4', '#1a1a1a', '#d4d4d4'],
-            scale: [0.95, 1.1, 0.95],
-          }),
-          { target: line, offset: ['start end', 'end start'] }
+        animate(
+          '#hero-title',
+          { opacity: [0, 1], scale: [0.95, 1], y: [20, 0] },
+          { duration: 1.2, delay: 0.8, easing: [0.17, 0.55, 0.55, 1] }
         )
-      })
+        animate('#hero-desc', { opacity: [0, 1] }, { duration: 1, delay: 1.2 })
+        animate(
+          '#hero-btn',
+          { opacity: [0, 1], y: [20, 0] },
+          { duration: 0.8, delay: 1.4 }
+        )
 
-      inView('#footer-content', ({ target }) => {
-        animate(target, { opacity: [0, 1], y: [20, 0] }, { duration: 0.8 })
-      })
+        // با توجه به اینکه ترک ها داینامیک لود می شوند، یک تاخیر کوتاه یا آبزرور نیاز است، اما inView معمولا درست کار میکند
+        inView('#music-grid', ({ target }) => {
+          animate(
+            target.querySelectorAll('.music-item'),
+            { opacity: [0, 1], y: [30, 0] },
+            { duration: 0.6, delay: stagger(0.15) }
+          )
+        })
+
+        document.querySelectorAll('.lyric-line').forEach((line) => {
+          scroll(
+            animate(line, {
+              color: ['#d4d4d4', '#1a1a1a', '#d4d4d4'],
+              scale: [0.95, 1.1, 0.95],
+            }),
+            { target: line, offset: ['start end', 'end start'] }
+          )
+        })
+
+        inView('#footer-content', ({ target }) => {
+          animate(target, { opacity: [0, 1], y: [20, 0] }, { duration: 0.8 })
+        })
+      }
+
+      // Use requestIdleCallback if available, otherwise setTimeout
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(initAnimations)
+      } else {
+        setTimeout(initAnimations, 1)
+      }
     </script>
   </body>
 </html>

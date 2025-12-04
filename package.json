@@ -4,7 +4,7 @@
   "description": "**[English]** A high-performance, single-page music portfolio designed for the \"Miras Sahrasy\" album by **Aytronic**. This project blends traditional Turkmen cultural elements with cutting-edge web technologies, featuring a real-time audio visualizer, dynamic track loading, and immersive animations.",
   "main": "index.js",
   "scripts": {
-    "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css",
+    "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
     "watch": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
   },
   "repository": {
