@@ -1,0 +1,8 @@
+/**
+ * Bundled by jsDelivr using Rollup v2.79.2 and Terser v5.39.0.
+ * Original file: /npm/@motionone/utils@10.18.0/dist/index.es.js
+ *
+ * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
+ */
+function n(n,t){-1===n.indexOf(t)&&n.push(t)}function t(n,t){const e=n.indexOf(t);e>-1&&n.splice(e,1)}const e=(n,t,e)=>Math.min(Math.max(e,n),t),o={duration:.3,delay:0,endDelay:0,repeat:0,easing:"ease"},r=n=>"number"==typeof n,c=n=>Array.isArray(n)&&!r(n[0]),u=(n,t,e)=>{const o=t-n;return((e-n)%o+o)%o+n};function i(n,t){return c(n)?n[u(0,n.length,t)]:n}const s=(n,t,e)=>-e*n+e*t+n,a=()=>{},f=n=>n,l=(n,t,e)=>t-n==0?1:(e-n)/(t-n);function p(n,t){const e=n[n.length-1];for(let o=1;o<=t;o++){const r=l(0,t,o);n.push(s(e,1,r))}}function y(n){const t=[0];return p(t,n-1),t}function h(n,t=y(n.length),o=f){const r=n.length,c=r-t.length;return c>0&&p(t,c),c=>{let u=0;for(;u<r-2&&!(c<t[u+1]);u++);let a=e(0,1,l(t[u],t[u+1],c));return a=i(o,u)(a),s(n[u],n[u+1],a)}}const g=n=>Array.isArray(n)&&r(n[0]),d=n=>"object"==typeof n&&Boolean(n.createAnimation),m=n=>"function"==typeof n,x=n=>"string"==typeof n,A={ms:n=>1e3*n,s:n=>n/1e3};function b(n,t){return t?n*(1e3/t):0}export{n as addUniqueItem,e as clamp,y as defaultOffset,o as defaults,p as fillOffset,i as getEasingForSegment,h as interpolate,g as isCubicBezier,d as isEasingGenerator,c as isEasingList,m as isFunction,r as isNumber,x as isString,s as mix,a as noop,f as noopReturn,l as progress,t as removeItem,A as time,b as velocityPerSecond,u as wrap};export default null;
+//# sourceMappingURL=/sm/f363cc0cf0d6269329a8a2aa27ac950600473899fae298ea5a2a3e98da56c6ce.map
