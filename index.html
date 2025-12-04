@@ -45,14 +45,8 @@
     />
 
     <link href="./dist/output.css" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Vazirmatn:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="./assets/css/fontawesome.min.css" />
+    <link href="./assets/fonts/fonts.css" rel="stylesheet" />
     <link
       rel="icon"
       type="image/png"
@@ -1781,7 +1775,7 @@
         audioMotionInitPromise = (async () => {
           if (!AudioMotionAnalyzer) {
             const module = await import(
-              'https://cdn.skypack.dev/audiomotion-analyzer?min'
+              './assets/js/audiomotion-analyzer.min.js'
             )
             AudioMotionAnalyzer = module.default
           }
@@ -2036,12 +2030,7 @@
     </script>
 
     <script type="module">
-      import {
-        animate,
-        scroll,
-        stagger,
-        inView,
-      } from 'https://cdn.jsdelivr.net/npm/motion@10.18.0/+esm'
+      import { animate, scroll, stagger, inView } from './assets/js/motion.js'
 
       animate('#navbar', { opacity: [0, 1], y: [-20, 0] }, { duration: 1 })
       animate(
