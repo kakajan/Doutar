@@ -189,7 +189,8 @@
       .glass-card:hover .play-btn-dust,
       .glass-card.playing .play-btn-dust,
       #fs-play-btn:hover .play-btn-dust,
-      #fs-play-btn.playing .play-btn-dust {
+      #fs-play-btn.playing .play-btn-dust,
+      .dust-btn:hover .play-btn-dust {
         animation: dustUp 1.5s infinite ease-out;
       }
 
@@ -358,7 +359,7 @@
         href="#download"
         class="text-xs font-bold tracking-widest uppercase border border-black/10 px-6 py-2 rounded-full hover:bg-black hover:text-white transition-all duration-300"
       >
-        دانلود پکیج
+        دانلود آلبوم کامل
       </a>
     </nav>
 
@@ -420,8 +421,16 @@
         <div class="pt-10" id="hero-btn">
           <a
             href="#music-hall"
-            class="group relative inline-flex items-center justify-center px-10 py-4 text-sm font-bold text-white transition-all duration-300 bg-black rounded-full hover:bg-gold hover:shadow-xl hover:shadow-gold/30"
+            class="dust-btn group relative inline-flex items-center justify-center px-10 py-4 text-sm font-bold text-white transition-all duration-300 bg-black rounded-full hover:bg-gold hover:shadow-xl hover:shadow-gold/30"
           >
+            <!-- Dust Particles -->
+            <div class="play-btn-dust-container">
+              <div class="play-btn-dust" style="left: 20%; animation-delay: 0s; --tx: -10px;"></div>
+              <div class="play-btn-dust" style="left: 50%; animation-delay: 0.5s; --tx: 5px;"></div>
+              <div class="play-btn-dust" style="left: 80%; animation-delay: 1s; --tx: -5px;"></div>
+              <div class="play-btn-dust" style="left: 35%; animation-delay: 0.2s; --tx: 10px;"></div>
+              <div class="play-btn-dust" style="left: 65%; animation-delay: 0.7s; --tx: -8px;"></div>
+            </div>
             <span
               class="relative flex items-center gap-3 tracking-widest uppercase"
             >
@@ -454,7 +463,9 @@
           <div>
             <h2 class="text-4xl text-black font-body font-bold">آرشیو آثار</h2>
             <p class="text-neutral-500 mt-2 text-sm font-light">
-              نسخه مورد نظر را انتخاب کنید
+              نسخه مورد نظر را انتخاب کنید و از شنیدن لذت ببرید.<br />
+              در حال حاظر <span class="font-bold">یک شعر</span> در سبک‌های
+              موسیقی مختلف برای شما آماده شده است.
             </p>
           </div>
           <div
@@ -510,11 +521,21 @@
       class="py-20 text-center relative z-10 bg-gradient-to-t from-black/5 to-transparent"
     >
       <div class="container mx-auto px-4" id="footer-content">
-        <button
-          class="bg-black text-white font-bold py-5 px-12 text-sm tracking-widest uppercase hover:bg-gold hover:text-black transition-all duration-300 shadow-xl shadow-black/10 rounded-full"
+        <a
+          href="assets/MirasSahrasy-Aytronic.zip"
+          download
+          class="dust-btn relative inline-block bg-black cursor-pointer text-white font-bold py-5 px-12 text-sm tracking-widest uppercase hover:bg-gold hover:text-black transition-all duration-300 shadow-xl shadow-black/10 rounded-full"
         >
-          Download Full Album (ZIP)
-        </button>
+          <!-- Dust Particles -->
+          <div class="play-btn-dust-container">
+            <div class="play-btn-dust" style="left: 20%; animation-delay: 0s; --tx: -10px;"></div>
+            <div class="play-btn-dust" style="left: 50%; animation-delay: 0.5s; --tx: 5px;"></div>
+            <div class="play-btn-dust" style="left: 80%; animation-delay: 1s; --tx: -5px;"></div>
+            <div class="play-btn-dust" style="left: 35%; animation-delay: 0.2s; --tx: 10px;"></div>
+            <div class="play-btn-dust" style="left: 65%; animation-delay: 0.7s; --tx: -8px;"></div>
+          </div>
+          <span class="relative z-10">Download Full Album (ZIP)</span>
+        </a>
 
         <div class="mt-12 flex justify-center gap-6">
           <a
@@ -603,21 +624,21 @@
             <div class="flex items-center gap-4 md:gap-6">
               <button
                 id="player-prev"
-                class="text-neutral-400 hover:text-gold transition-colors"
+                class="text-neutral-400 hover:text-gold transition-colors cursor-pointer"
               >
                 <i class="fas fa-backward-step text-sm md:text-base"></i>
               </button>
 
               <button
                 id="player-play-btn"
-                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-gold hover:text-black transition-all shadow-lg hover:scale-105"
+                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-gold hover:text-black transition-all shadow-lg hover:scale-105 cursor-pointer"
               >
                 <i class="fas fa-play text-xs md:text-sm ml-0.5"></i>
               </button>
 
               <button
                 id="player-next"
-                class="text-neutral-400 hover:text-gold transition-colors"
+                class="text-neutral-400 hover:text-gold transition-colors cursor-pointer"
               >
                 <i class="fas fa-forward-step text-sm md:text-base"></i>
               </button>
@@ -671,7 +692,7 @@
             />
             <button
               id="player-maximize"
-              class="ml-4 text-neutral-400 hover:text-black transition-colors"
+              class="ml-4 text-neutral-400 hover:text-black transition-colors cursor-pointer"
             >
               <i class="fas fa-expand text-sm"></i>
             </button>
@@ -680,7 +701,7 @@
           <!-- Mobile Maximize Button -->
           <button
             id="player-maximize-mobile"
-            class="md:hidden text-neutral-400 hover:text-black transition-colors ml-2"
+            class="md:hidden text-neutral-400 hover:text-black transition-colors ml-2 cursor-pointer"
           >
             <i class="fas fa-expand text-lg"></i>
           </button>
@@ -723,7 +744,7 @@
       <!-- Close Button -->
       <button
         id="fs-close-btn"
-        class="absolute top-8 right-8 text-white/50 hover:text-white z-20 transition-colors p-2"
+        class="absolute top-8 right-8 text-white/50 hover:text-white z-20 transition-colors p-2 cursor-pointer"
       >
         <i class="fas fa-chevron-down text-3xl"></i>
       </button>
@@ -792,14 +813,14 @@
         <div class="flex items-center gap-12">
           <button
             id="fs-prev"
-            class="text-white/60 hover:text-gold transition-colors text-3xl hover:scale-110 duration-200"
+            class="text-white/60 hover:text-gold transition-colors text-3xl hover:scale-110 duration-200 cursor-pointer"
           >
             <i class="fas fa-backward-step"></i>
           </button>
 
           <button
             id="fs-play-btn"
-            class="w-20 h-20 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] group relative"
+            class="w-20 h-20 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] group relative cursor-pointer"
           >
             <!-- Dust Particles -->
             <div class="play-btn-dust-container">
@@ -836,7 +857,7 @@
 
           <button
             id="fs-next"
-            class="text-white/60 hover:text-gold transition-colors text-3xl hover:scale-110 duration-200"
+            class="text-white/60 hover:text-gold transition-colors text-3xl hover:scale-110 duration-200 cursor-pointer"
           >
             <i class="fas fa-forward-step"></i>
           </button>
@@ -922,7 +943,7 @@
                         <p class="text-xs text-neutral-500 font-light">${track.subtitle}</p>
                     </div>
 
-                    <a href="${track.file}" class="text-neutral-400 hover:text-black transition-colors relative z-10" download>
+                    <a href="${track.file}" class="text-neutral-400 hover:text-black transition-colors relative z-10 cursor-pointer" download>
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     </a>
                     
@@ -1239,19 +1260,58 @@
       // Open Full Screen
       maximizeBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
+          openFullscreen()
+        })
+      })
+
+      // Close Full Screen
+      fsCloseBtn.addEventListener('click', () => {
+        if (history.state && history.state.playerOpen) {
+          history.back()
+        } else {
+          closeFullscreenUI()
+        }
+      })
+
+      // --- History & Navigation Handlers ---
+      function openFullscreen() {
+        fsPlayer.classList.remove('translate-y-full', 'opacity-0', 'invisible')
+        document.body.classList.add('overflow-hidden')
+        history.pushState({ playerOpen: true }, '', '#player')
+      }
+
+      function closeFullscreenUI() {
+        fsPlayer.classList.add('translate-y-full', 'opacity-0', 'invisible')
+        document.body.classList.remove('overflow-hidden')
+      }
+
+      window.addEventListener('popstate', (event) => {
+        if (event.state && event.state.playerOpen) {
           fsPlayer.classList.remove(
             'translate-y-full',
             'opacity-0',
             'invisible'
           )
           document.body.classList.add('overflow-hidden')
-        })
+        } else {
+          closeFullscreenUI()
+        }
       })
 
-      // Close Full Screen
-      fsCloseBtn.addEventListener('click', () => {
-        fsPlayer.classList.add('translate-y-full', 'opacity-0', 'invisible')
-        document.body.classList.remove('overflow-hidden')
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace') {
+          if (!fsPlayer.classList.contains('invisible')) {
+            if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName))
+              return
+
+            e.preventDefault()
+            if (history.state && history.state.playerOpen) {
+              history.back()
+            } else {
+              closeFullscreenUI()
+            }
+          }
+        }
       })
 
       // Sync FS UI
