@@ -566,7 +566,7 @@
 
     <header
       id="hero-section"
-      class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden z-10 hero-prehide hero-hidden"
+      class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden z-10"
     >
       <!-- Artistic Background Image -->
       <div class="absolute inset-0 z-0 pointer-events-none select-none">
@@ -1357,7 +1357,7 @@
             // Important: Added id to span for duration update
             // Added preload="metadata" to audio tag
             return `
-                <div class="glass-card rounded-2xl p-8 flex items-center gap-6 group music-item relative overflow-hidden" dir="ltr">
+              <div class="glass-card rounded-2xl p-8 flex items-center gap-6 group music-item relative overflow-hidden select-none" dir="ltr">
                     <!-- Background Visualizer -->
                     <div class="card-viz-container absolute inset-0 flex items-end justify-between gap-0.5 opacity-0 group-[.playing]:opacity-10 pointer-events-none px-4 pb-0 transition-opacity duration-500">
                         ${vizBars}
@@ -2079,7 +2079,6 @@
       const shouldAnimate = performance.now() < ANIMATION_DEADLINE_MS
       const heroTargets = [
         '#navbar',
-        '#hero-section',
         '#hero-subtitle',
         '#hero-title',
         '#hero-desc',
@@ -2128,14 +2127,7 @@
           { duration: 0.8, delay: 1.4 }
         )
 
-        // با توجه به اینکه ترک ها داینامیک لود می شوند، یک تاخیر کوتاه یا آبزرور نیاز است، اما inView معمولا درست کار میکند
-        inView('#music-grid', ({ target }) => {
-          animate(
-            target.querySelectorAll('.music-item'),
-            { opacity: [0, 1], y: [30, 0] },
-            { duration: 0.6, delay: stagger(0.15) }
-          )
-        })
+        // Music card entrance animations disabled intentionally
 
         document.querySelectorAll('.lyric-line').forEach((line) => {
           scroll(
