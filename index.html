@@ -243,10 +243,10 @@
       /* Visualizer */
       .viz-bar-bg {
         flex: 1;
-        background-color: #d4af37;
+        background: linear-gradient(to top, #e0e0e0, #757575);
         border-radius: 2px 2px 0 0;
         height: 5%;
-        opacity: 0.3;
+        opacity: 0.5;
         transition: height 0.1s linear;
       }
 
@@ -356,6 +356,196 @@
       body.loaded #preloader {
         opacity: 0;
         visibility: hidden;
+      }
+
+      /* Utility */
+      .hidden {
+        display: none !important;
+      }
+
+      /* --- Redesigned Music Tabs --- */
+      .music-tabs-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 3rem;
+      }
+
+      .music-tabs {
+        position: relative;
+        display: inline-flex;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 6px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        gap: 0; /* Gap handled by margins or just layout, but 0 is safer for calculation if we use offsetLeft */
+      }
+
+      .tab-glider {
+        position: absolute;
+        top: 6px;
+        left: 0;
+        height: calc(100% - 12px);
+        background: #1a1a1a;
+        border-radius: 999px;
+        z-index: 0;
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        pointer-events: none;
+      }
+
+      .music-tab {
+        position: relative;
+        z-index: 1;
+        border: none;
+        background: transparent !important;
+        border-radius: 999px;
+        padding: 12px 32px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: color 0.3s ease;
+        cursor: pointer;
+        overflow: hidden;
+        margin: 0 4px; /* Add spacing here instead of gap */
+      }
+
+      .music-tab:hover {
+        /* No background on hover, maybe just text color change if needed */
+        color: #555;
+      }
+
+      .music-tab.active {
+        color: #d4af37;
+        /* Background handled by glider */
+        box-shadow: none;
+      }
+
+      /* Icon removed as per request */
+
+      .music-tab-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centered text */
+        text-align: center;
+      }
+
+      .music-tab-title {
+        font-family: 'Vazirmatn', sans-serif; /* Changed to font-body */
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 0;
+        line-height: 1.4;
+      }
+
+      .music-tab.active .music-tab-title {
+        color: #fff;
+      }
+
+      .music-tab-hint {
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 0.75rem;
+        opacity: 0.6;
+        font-weight: 300;
+      }
+
+      .music-tab.active .music-tab-hint {
+        color: #d4af37;
+        opacity: 1;
+      }
+
+      /* --- Redesigned Dense Cards --- */
+      .music-grid-dense {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 16px;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        transform: translateX(0);
+      }
+
+      .music-card-dense {
+        padding: 10px 14px;
+        gap: 16px;
+        min-height: 84px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.4);
+        transition: all 0.3s ease;
+      }
+
+      .music-card-dense:hover {
+        background: rgba(255, 255, 255, 0.8);
+        border-color: #d4af37;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -5px rgba(212, 175, 55, 0.15);
+      }
+
+      .music-card-dense.playing {
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 248, 225, 0.95)
+        );
+        border-color: #d4af37;
+        box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3);
+      }
+
+      .music-card-dense .play-btn-wrapper {
+        width: 48px;
+        height: 48px;
+        background: #1a1a1a;
+        color: #d4af37;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .music-card-dense .play-btn-dust {
+        background: #1a1a1a;
+      }
+
+      .music-card-dense:hover .play-btn-wrapper {
+        transform: scale(1.05);
+        background: #d4af37;
+        color: #1a1a1a;
+      }
+
+      .music-card-dense h4 {
+        font-size: 0.95rem;
+        margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .music-card-dense .track-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.7rem;
+        color: #666;
+      }
+
+      .music-card-dense .track-meta span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .music-card-dense .action-btn {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: #999;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+      }
+
+      .music-card-dense .action-btn:hover {
+        color: #1a1a1a;
+        background: rgba(0, 0, 0, 0.05);
       }
     </style>
     <script type="importmap">
@@ -685,7 +875,7 @@
     <section id="music-hall" class="py-32 relative z-10">
       <div class="container mx-auto px-6 max-w-6xl">
         <div
-          class="flex items-end justify-between mb-20 border-b border-black/5 pb-4"
+          class="flex items-end text-center justify-between mb-20 border-b border-black/5 pb-4"
           id="music-header"
         >
           <div>
@@ -693,9 +883,7 @@
               دانلود قطعات آلبوم (کیفیت ۳۲۰)
             </h2>
             <p class="text-neutral-500 mt-2 text-sm font-light">
-              نسخه مورد نظر را انتخاب کنید و از شنیدن لذت ببرید.<br />
-              در حال حاظر <span class="font-bold">یک شعر</span> در سبک‌های
-              موسیقی مختلف برای شما آماده شده است.
+              شعر مورد نظر را انتخاب کنید و از شنیدن سبک‌های متنوع آن لذت ببرید.
             </p>
           </div>
           <div
@@ -706,10 +894,11 @@
           </div>
         </div>
 
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 gap-6"
-          id="music-grid"
-        ></div>
+        <div class="music-tabs-container">
+          <div class="music-tabs" id="music-tabs"></div>
+        </div>
+
+        <div class="music-grid-dense" id="music-grid"></div>
       </div>
     </section>
 
@@ -920,7 +1109,7 @@
     >
       <div class="container mx-auto px-4" id="footer-content">
         <a
-          href="assets/MirasSahrasy-Aytronic.zip"
+          href="assets/Unity-Aytronic.zip"
           download
           class="dust-btn relative inline-block bg-black cursor-pointer text-white font-bold py-5 px-12 text-sm tracking-widest uppercase hover:bg-gold hover:text-black transition-all duration-300 shadow-xl shadow-black/10 rounded-full"
         >
@@ -947,7 +1136,37 @@
               style="left: 65%; animation-delay: 0.7s; --tx: -8px"
             ></div>
           </div>
-          <span class="relative z-10">Download Full Album (ZIP)</span>
+          <span class="relative z-10">Download Full Album (Unity)</span>
+        </a>
+        <a
+          href="assets/CHAP-Aytronic.zip"
+          download
+          class="dust-btn mt-3 relative inline-block bg-black cursor-pointer text-white font-bold py-5 px-12 text-sm tracking-widest uppercase hover:bg-gold hover:text-black transition-all duration-300 shadow-xl shadow-black/10 rounded-full"
+        >
+          <!-- Dust Particles -->
+          <div class="play-btn-dust-container">
+            <div
+              class="play-btn-dust"
+              style="left: 20%; animation-delay: 0s; --tx: -10px"
+            ></div>
+            <div
+              class="play-btn-dust"
+              style="left: 50%; animation-delay: 0.5s; --tx: 5px"
+            ></div>
+            <div
+              class="play-btn-dust"
+              style="left: 80%; animation-delay: 1s; --tx: -5px"
+            ></div>
+            <div
+              class="play-btn-dust"
+              style="left: 35%; animation-delay: 0.2s; --tx: 10px"
+            ></div>
+            <div
+              class="play-btn-dust"
+              style="left: 65%; animation-delay: 0.7s; --tx: -8px"
+            ></div>
+          </div>
+          <span class="relative z-10">Download Full Album (CHAP!)</span>
         </a>
 
         <div class="mt-12 flex justify-center gap-6">
@@ -1310,18 +1529,45 @@
     </div>
 
     <script>
-      // --- 1. DATA: Generate 27 Tracks Automatically ---
-      const trackData = Array.from({ length: 27 }, (_, i) => {
-        const num = (i + 1).toString().padStart(2, '0')
-        return {
-          id: `track${i + 1}`,
-          title: `MIRAS SAHRASY #${num}`,
-          subtitle: `Aytronic`,
-          file: `https://doutar.ir/assets/music/Track${i + 1}.mp3`, // مسیر فایل ها: track1.mp3 تا track28.mp3
-          vizCount: Math.floor(Math.random() * 5) + 5, // تعداد خطوط ویژوالایزر رندوم
-          duration: 180, // Duration in seconds (3:00 as default)
-        }
-      })
+      // --- 1. DATA: Two Music Groups ---
+      const buildTracks = (groupId, count, prefix, artist, startIndex = 1) =>
+        Array.from({ length: count }, (_, i) => {
+          const num = (startIndex + i).toString().padStart(2, '0')
+          return {
+            id: `${groupId}-track-${i + 1}`,
+            title: `${prefix} #${num}`,
+            subtitle: artist,
+            file: `https://doutar.ir/assets/music/Track${startIndex + i}.mp3`,
+            vizCount: Math.floor(Math.random() * 5) + 5,
+            duration: 180,
+          }
+        })
+
+      const musicGroups = [
+        {
+          id: 'aytronic',
+          name: 'اتحاد',
+          hint: '',
+          icon: 'fa-wave-square',
+          tracks: buildTracks('1', 27, 'Unity', 'Aytronic', 1),
+        },
+        {
+          id: 'ensemble',
+          name: 'چاپ!',
+          hint: '',
+          icon: 'fa-guitar',
+          tracks: buildTracks(
+            '2',
+            20,
+            'CHAP!',
+            'Aytronic',
+            1
+          ),
+        },
+      ]
+
+      let activeGroup = musicGroups[0]
+      let trackData = [...activeGroup.tracks]
 
       // --- Helper: Format Time (Seconds to MM:SS) ---
       function formatTime(seconds) {
@@ -1333,6 +1579,118 @@
           .padStart(2, '0')}`
       }
 
+      // --- 1.1. UI: Tabs ---
+      function renderTabs() {
+        const tabsContainer = document.getElementById('music-tabs')
+        if (!tabsContainer) return
+
+        const tabsHtml = musicGroups
+          .map(
+            (group) => `
+            <button class="music-tab ${
+              group.id === activeGroup.id ? 'active' : ''
+            }" data-group="${group.id}">
+              <div class="music-tab-content">
+                <span class="music-tab-title">${group.name}</span>
+                <span class="music-tab-hint">${group.hint}</span>
+              </div>
+            </button>
+          `
+          )
+          .join('')
+
+        // Insert Glider + Tabs
+        tabsContainer.innerHTML = `<div class="tab-glider"></div>${tabsHtml}`
+
+        tabsContainer.querySelectorAll('.music-tab').forEach((btn) => {
+          btn.addEventListener('click', () => switchGroup(btn.dataset.group))
+        })
+
+        // Initialize Glider Position
+        setTimeout(updateGlider, 50)
+        window.addEventListener('resize', updateGlider)
+      }
+
+      function updateGlider() {
+        const tabsContainer = document.getElementById('music-tabs')
+        if (!tabsContainer) return
+        const activeTab = tabsContainer.querySelector('.music-tab.active')
+        const glider = tabsContainer.querySelector('.tab-glider')
+
+        if (activeTab && glider) {
+          glider.style.width = `${activeTab.offsetWidth}px`
+          glider.style.transform = `translateX(${activeTab.offsetLeft}px)`
+        }
+      }
+
+      function switchGroup(groupId) {
+        const nextGroupIndex = musicGroups.findIndex((g) => g.id === groupId)
+        const activeGroupIndex = musicGroups.findIndex(
+          (g) => g.id === activeGroup.id
+        )
+        const nextGroup = musicGroups[nextGroupIndex]
+
+        if (!nextGroup || nextGroup.id === activeGroup.id) return
+
+        if (currentAudio) {
+          currentAudio.pause()
+          currentAudio.currentTime = 0
+          if (currentBtnWrapper) {
+            resetUI(currentBtnWrapper, currentBtnWrapper.closest('.glass-card'))
+          }
+          updateStickyPlayBtn(false)
+          visualizerEngine.stop()
+          stickyPlayer.classList.add('translate-y-full')
+          currentAudio = null
+          currentBtnWrapper = null
+        }
+
+        // Update Active State & Glider (No Re-render)
+        const tabsContainer = document.getElementById('music-tabs')
+        const tabs = tabsContainer.querySelectorAll('.music-tab')
+        tabs.forEach((t) => {
+          if (t.dataset.group === groupId) t.classList.add('active')
+          else t.classList.remove('active')
+        })
+        updateGlider()
+
+        const grid = document.getElementById('music-grid')
+        if (grid) {
+          // Calculate Direction
+          // If moving to a later tab (index increases), content slides LEFT (exit -X) and enters from RIGHT (entry +X)
+          const direction = nextGroupIndex > activeGroupIndex ? 1 : -1
+          const offset = 30 // px
+
+          // Slide Out
+          grid.style.opacity = '0'
+          grid.style.transform = `translateX(${direction * -offset}px)`
+
+          setTimeout(() => {
+            activeGroup = nextGroup
+            trackData = [...nextGroup.tracks]
+            // renderTabs() -> Removed to prevent DOM destruction
+            renderTracks()
+
+            // Prepare Slide In (Instant jump to other side)
+            grid.style.transition = 'none'
+            grid.style.transform = `translateX(${direction * offset}px)`
+
+            // Force Reflow
+            void grid.offsetWidth
+
+            // Slide In
+            grid.style.transition = 'opacity 0.2s ease, transform 0.2s ease'
+            grid.style.opacity = '1'
+            grid.style.transform = 'translateX(0)'
+          }, 200)
+        } else {
+          activeGroup = nextGroup
+          trackData = [...nextGroup.tracks]
+          // renderTabs() -> Removed
+          renderTracks()
+        }
+      }
+
       // --- 2. LOGIC: Dynamic Rendering & Duration Fetching ---
       function renderTracks() {
         const grid = document.getElementById('music-grid')
@@ -1342,28 +1700,28 @@
 
         // Update Counter
         if (counter)
-          counter.innerText = `/// ${trackData.length
+          counter.innerText = `/// ${activeGroup.name} • ${trackData.length
             .toString()
-            .padStart(2, '0')} TRACKS LOADED`
+            .padStart(2, '0')} TRACKS`
 
         grid.innerHTML = trackData
           .map((track) => {
             // Generate Visualizer Bars HTML (More bars for full width)
             let vizBars = ''
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 28; i++) {
               vizBars += `<div class="viz-bar-bg"></div>`
             }
 
             // Important: Added id to span for duration update
             // Added preload="metadata" to audio tag
             return `
-              <div class="glass-card rounded-2xl p-8 flex items-center gap-6 group music-item relative overflow-hidden select-none" dir="ltr">
+                <div class="glass-card music-card-dense rounded-2xl flex items-center group music-item relative overflow-hidden select-none" dir="ltr">
                     <!-- Background Visualizer -->
                     <div class="card-viz-container absolute inset-0 flex items-end justify-between gap-0.5 opacity-0 group-[.playing]:opacity-10 pointer-events-none px-4 pb-0 transition-opacity duration-500">
                         ${vizBars}
                     </div>
 
-                    <div class="play-btn-wrapper w-16 h-16 shrink-0 cursor-pointer shadow-lg relative z-10" onclick="togglePlay('${track.id}', this)">
+                    <div class="play-btn-wrapper rounded-full flex items-center justify-center shrink-0 cursor-pointer relative z-10 transition-all duration-300" onclick="togglePlay('${track.id}', this)">
                         <!-- Dust Particles -->
                         <div class="play-btn-dust-container">
                           <div class="play-btn-dust" style="left: 20%; animation-delay: 0s; --tx: -10px;"></div>
@@ -1372,22 +1730,23 @@
                           <div class="play-btn-dust" style="left: 35%; animation-delay: 0.2s; --tx: 10px;"></div>
                           <div class="play-btn-dust" style="left: 65%; animation-delay: 0.7s; --tx: -8px;"></div>
                         </div>
-                        <svg class="w-6 h-6 play-icon ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        <svg class="w-6 h-6 pause-icon hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                        <svg class="w-6 h-6 animate-spin loading-icon hidden text-gold" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
+                        <i class="fas fa-play play-icon text-lg ml-0.5"></i>
+                        <i class="fas fa-pause pause-icon text-lg hidden"></i>
+                        <i class="fas fa-circle-notch fa-spin loading-icon text-lg hidden"></i>
                     </div>
                     
-                    <div class="flex-1 relative z-10">
-                        <h4 class="text-lg font-bold text-neutral-900 group-hover:text-dark-gold transition-colors mb-2">${track.title}</h4>
-                        <p class="text-xs text-neutral-500 font-light">${track.subtitle}</p>
+                    <div class="flex-1 relative z-10 min-w-0">
+                        <h4 class="font-bold text-neutral-900 group-hover:text-dark-gold transition-colors truncate">${track.title}</h4>
+                        <div class="track-meta mt-1">
+                          <span class="truncate"><i class="fas fa-microphone-lines text-[0.6rem]"></i> ${track.subtitle}</span>
+                        </div>
                     </div>
 
-                    <a href="${track.file}" class="text-neutral-400 hover:text-black transition-colors relative z-10 cursor-pointer" download aria-label="Download ${track.title}">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    </a>
+                    <div class="flex items-center gap-2 relative z-10">
+                        <a href="${track.file}" class="action-btn" download aria-label="Download">
+                            <i class="fas fa-download text-sm"></i>
+                        </a>
+                    </div>
                     
                     <audio id="${track.id}" preload="none" crossorigin="anonymous">
                         <source src="${track.file}" type="audio/mpeg">
@@ -2072,6 +2431,7 @@
 
       // Initializer
       document.addEventListener('DOMContentLoaded', () => {
+        renderTabs()
         renderTracks()
         new DustSystem('dust-canvas', 60)
         new DustSystem('fs-dust-canvas', 80) // More particles for the focused view
