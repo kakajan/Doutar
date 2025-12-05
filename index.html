@@ -1525,14 +1525,19 @@
       let isSeeking = false
 
       function initStickyPlayer(audioId) {
-        const track = trackData.find((t) => t.id === audioId)
+        const trackIndex = trackData.findIndex((t) => t.id === audioId)
+        const track = trackData[trackIndex]
         if (!track) return
 
         // Show Player
         stickyPlayer.classList.remove('translate-y-full')
 
-        // Update Info
-        playerTitle.innerText = track.title
+        // Update Info (show only track number beside the cover)
+        const trackNumber =
+          trackIndex >= 0
+            ? `#${(trackIndex + 1).toString().padStart(2, '0')}`
+            : track.title
+        playerTitle.innerText = trackNumber
         playerArtist.innerText = track.subtitle
 
         // Update FS Info
