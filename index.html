@@ -1428,7 +1428,9 @@
           </div>
 
           <!-- Volume / Extra (Hidden on mobile if needed) -->
-          <div class="hidden md:flex items-center justify-end w-1/4 gap-2">
+          <div
+            class="hidden md:flex items-center justify-end w-1/4 gap-2 shrink-0"
+          >
             <i
               id="volume-icon"
               class="fas fa-volume-high text-neutral-400 text-xs"
@@ -1990,7 +1992,9 @@
         // Update Info (show only track number beside the cover)
         const trackNumber =
           trackIndex >= 0
-            ? `#${(trackIndex + 1).toString().padStart(2, '0')}`
+            ? `${activeGroup.name} #${(trackIndex + 1)
+                .toString()
+                .padStart(2, '0')}`
             : track.title
         playerTitle.innerText = trackNumber
         playerArtist.innerText = track.subtitle
