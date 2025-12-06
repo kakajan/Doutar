@@ -872,11 +872,21 @@
       <div class="loader-text">Miras Sahrasy</div>
     </div>
     <script>
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          document.body.classList.add('loaded')
-        }, 800)
+      // Do not wait for all assets (e.g., analytics) to finish; hide preloader early with fallbacks
+      const hidePreloader = () => document.body.classList.add('loaded')
+
+      // Primary: after DOM is ready
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(hidePreloader, 300)
       })
+
+      // Secondary: when full load fires
+      window.addEventListener('load', () => {
+        setTimeout(hidePreloader, 0)
+      })
+
+      // Safety timeout in case load is delayed
+      setTimeout(hidePreloader, 4000)
     </script>
     <div class="bg-mesh"></div>
     <canvas id="dust-canvas"></canvas>
@@ -1083,13 +1093,13 @@
     <section
       class="relative py-32 overflow-hidden bg-neutral-950 text-white isolate"
     >
-      <!-- Background Ambient Glow -->
-      <div class="absolute inset-0 pointer-events-none">
+      <!-- Background Ambient Glow (simplified for performance) -->
+      <div class="absolute inset-0 pointer-events-none hidden md:block">
         <div
-          class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gold/10 rounded-full blur-[120px] mix-blend-screen animate-pulse"
+          class="absolute top-0 left-1/4 w-[400px] h-[400px] bg-gold/5 rounded-full blur-3xl"
         ></div>
         <div
-          class="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[120px] mix-blend-screen"
+          class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-900/10 rounded-full blur-3xl"
         ></div>
       </div>
 
@@ -1105,12 +1115,9 @@
           <!-- Text Content -->
           <div class="flex-1 text-center md:text-right space-y-8">
             <div
-              class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm shadow-lg shadow-black/20"
+              class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 border border-white/10 shadow-lg shadow-black/20"
             >
               <span class="relative flex h-2 w-2">
-                <span
-                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
-                ></span>
                 <span
                   class="relative inline-flex rounded-full h-2 w-2 bg-green-500"
                 ></span>
@@ -1156,7 +1163,7 @@
 
               <div class="flex items-center gap-5 relative z-10">
                 <div
-                  class="w-12 h-12 bg-black/20 rounded-xl flex items-center justify-center backdrop-blur-sm group-hover:bg-black/30 transition-colors border border-white/10"
+                  class="w-12 h-12 bg-black/30 rounded-xl flex items-center justify-center group-hover:bg-black/40 transition-colors border border-white/10"
                 >
                   <i class="fab fa-instagram text-2xl text-white"></i>
                 </div>
@@ -1204,7 +1211,7 @@
             >
               <div class="flex items-center gap-5 relative z-10">
                 <div
-                  class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center backdrop-blur-sm group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 border border-blue-500/20"
+                  class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 border border-blue-500/20"
                 >
                   <i
                     class="fab fa-telegram text-2xl text-blue-500 group-hover:text-white transition-colors"
@@ -1507,36 +1514,10 @@
             </div>
           </div>
 
-          <!-- Volume / Extra (Hidden on mobile if needed) -->
-          <div
-            class="hidden sm:flex items-center justify-end w-1/4 gap-2 shrink-0"
-          >
-            <i
-              id="volume-icon"
-              class="fas fa-volume-high text-neutral-400 text-xs"
-            ></i>
-            <input
-              type="range"
-              id="player-volume"
-              min="0"
-              max="1"
-              step="0.05"
-              value="1"
-              class="w-20 h-1 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-black"
-            />
-            <button
-              id="player-maximize"
-              class="ml-4 text-neutral-400 hover:text-black transition-colors cursor-pointer"
-              aria-label="Maximize Player"
-            >
-              <i class="fas fa-expand text-sm"></i>
-            </button>
-          </div>
-
           <!-- Mobile Maximize Button -->
           <button
             id="player-maximize-mobile"
-            class="sm:hidden text-neutral-400 hover:text-black transition-colors ml-2 cursor-pointer"
+            class="text-neutral-400 hover:text-black transition-colors ml-2 cursor-pointer"
             aria-label="Maximize Player"
           >
             <i class="fas fa-expand text-lg"></i>
@@ -1899,7 +1880,9 @@
                         ${vizBars}
                     </div>
 
-                    <div class="play-btn-wrapper rounded-full flex items-center justify-center shrink-0 cursor-pointer relative z-10 transition-all duration-300" onclick="togglePlay('${track.id}', this)">
+                    <div class="play-btn-wrapper rounded-full flex items-center justify-center shrink-0 cursor-pointer relative z-10 transition-all duration-300" onclick="togglePlay('${
+                      track.id
+                    }', this)">
                         <!-- Dust Particles -->
                         <div class="play-btn-dust-container">
                           <div class="play-btn-dust" style="left: 20%; animation-delay: 0s; --tx: -10px;"></div>
@@ -1914,19 +1897,38 @@
                     </div>
                     
                     <div class="flex-1 relative z-10 min-w-0">
-                        <h4 class="font-bold text-neutral-900 group-hover:text-dark-gold transition-colors truncate">${track.title}</h4>
+                        <h4 class="font-bold text-neutral-900 group-hover:text-dark-gold transition-colors truncate">${
+                          track.title
+                        }</h4>
                         <div class="track-meta mt-1">
-                          <span class="truncate"><i class="fas fa-microphone-lines text-[0.6rem]"></i> ${track.subtitle}</span>
+                          <span class="truncate"><i class="fas fa-microphone-lines text-[0.6rem]"></i> ${
+                            track.subtitle
+                          }</span>
                         </div>
                     </div>
 
                     <div class="flex items-center gap-2 relative z-10">
-                        <a href="${track.file}" class="action-btn" download aria-label="Download">
-                            <i class="fas fa-download text-sm"></i>
-                        </a>
+                      <a href="${
+                        track.file
+                      }" class="action-btn" download aria-label="Download">
+                        <i class="fas fa-download text-sm"></i>
+                      </a>
+                      <button
+                        type="button"
+                        class="action-btn" 
+                        aria-label="Share"
+                        onclick="shareTrack('${track.file.replace(
+                          "'",
+                          "\\'"
+                        )}', '${track.title.replace("'", "\\'")}')"
+                      >
+                        <i class="fas fa-share text-sm"></i>
+                      </button>
                     </div>
                     
-                    <audio id="${track.id}" preload="none" crossorigin="anonymous">
+                    <audio id="${
+                      track.id
+                    }" preload="none" crossorigin="anonymous">
                         <source src="${track.file}" type="audio/mpeg">
                     </audio>
                 </div>
@@ -2044,6 +2046,47 @@
         if (card) card.classList.remove('playing')
       }
 
+      // --- Share: shareTrack(fileUrl, title)
+      async function shareTrack(fileUrl, title) {
+        const shareText = 'shared with love from https://doutar.ir 👇'
+        try {
+          // Preferred: share URL + message via Web Share API
+          if (navigator.share) {
+            await navigator.share({
+              title: title,
+              text: shareText,
+              url: fileUrl,
+            })
+            return
+          }
+
+          // Fallback: copy link + message to clipboard
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(`${shareText}\n${fileUrl}`)
+            alert(
+              'Link copied to clipboard. You can paste it anywhere to share.'
+            )
+            return
+          }
+
+          // Last resort: open mail client with prefilled subject/body
+          window.location.href = `mailto:?subject=${encodeURIComponent(
+            title
+          )}&body=${encodeURIComponent(shareText + '\n' + fileUrl)}`
+        } catch (err) {
+          console.error('Share failed', err)
+          try {
+            await navigator.clipboard.writeText(fileUrl)
+            alert('اشتراک‌گذاری پشتیبانی نمی‌شود؛ لینک در کلیپ‌بورد کپی شد.')
+          } catch (e) {
+            alert(
+              'اشتراک‌گذاری پشتیبانی نمی‌شود. لطفاً لینک را دستی به اشتراک بگذارید: ' +
+                fileUrl
+            )
+          }
+        }
+      }
+
       // --- 3.1. LOGIC: Sticky Player ---
       const stickyPlayer = document.getElementById('sticky-player')
       const playerTitle = document.getElementById('player-title')
@@ -2052,8 +2095,6 @@
       const playerPrevBtn = document.getElementById('player-prev')
       const playerNextBtn = document.getElementById('player-next')
       const playerSeek = document.getElementById('player-seek')
-      const playerVolume = document.getElementById('player-volume')
-      const volumeIcon = document.getElementById('volume-icon')
       const playerCurrentTime = document.getElementById('player-current-time')
       const playerDuration = document.getElementById('player-duration')
       const progressFill = document.getElementById('progress-fill')
@@ -2086,9 +2127,6 @@
         if (currentAudio) {
           currentAudio.removeEventListener('timeupdate', updateProgress)
           currentAudio.addEventListener('timeupdate', updateProgress)
-
-          // Set volume
-          currentAudio.volume = playerVolume.value
         }
       }
 
@@ -2166,26 +2204,6 @@
         isSeeking = false
       })
 
-      playerVolume.addEventListener('input', (e) => {
-        const vol = parseFloat(e.target.value)
-        if (currentAudio) {
-          currentAudio.volume = vol
-        }
-
-        volumeIcon.classList.remove(
-          'fa-volume-mute',
-          'fa-volume-low',
-          'fa-volume-high'
-        )
-        if (vol === 0) {
-          volumeIcon.classList.add('fa-volume-mute')
-        } else if (vol < 0.5) {
-          volumeIcon.classList.add('fa-volume-low')
-        } else {
-          volumeIcon.classList.add('fa-volume-high')
-        }
-      })
-
       playerPrevBtn.addEventListener('click', () => {
         if (!currentAudio) return
         const currentId = currentAudio.id
@@ -2226,10 +2244,7 @@
       const fsProgressFill = document.getElementById('fs-progress-fill')
       const fsProgressHandle = document.getElementById('fs-progress-handle')
 
-      const maximizeBtns = [
-        document.getElementById('player-maximize'),
-        document.getElementById('player-maximize-mobile'),
-      ]
+      const maximizeBtns = [document.getElementById('player-maximize-mobile')]
 
       // Open Full Screen
       maximizeBtns.forEach((btn) => {
