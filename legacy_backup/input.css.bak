@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold: #d4af37;
+  --color-dark-gold: #b4941f;
+  --color-sand-light: #f9f7f2;
+  --color-sand-dark: #ebe5ce;
+  --color-deep-black: #1a1a1a;
+
+  --font-epic: Cinzel, serif;
+  --font-body: Vazirmatn, sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-sand-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-dark-gold);
+}
+
+/* iOS Safe Area utilities */
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+/* Ensure viewport-fit is set for iOS safe areas */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .sticky-player-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}
