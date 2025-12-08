@@ -43,10 +43,11 @@ function handleTouchMove(e: TouchEvent) {
   touchCurrentY.value = e.touches[0].clientY
   const diff = touchCurrentY.value - touchStartY.value
   
-  // Only allow dragging down
-  if (diff > 0) {
-    dragOffset.value = diff
-    // Prevent scroll on body when dragging
+  // Update drag offset, but keep it positive (only drag down)
+  dragOffset.value = Math.max(0, diff)
+  
+  // Prevent scroll on body if we actally dragged down
+  if (dragOffset.value > 0) {
     e.preventDefault()
   }
 }
@@ -230,8 +231,6 @@ const dragStyle = computed(() => {
     <!-- Content -->
     <div 
       class="relative z-10 w-full max-w-md px-8 flex flex-col items-center text-center"
-      @mousedown.stop
-      @touchstart.stop
     >
       <!-- Album Art -->
       <div class="w-64 h-64 md:w-80 md:h-80 rounded-3xl shadow-2xl shadow-black/50 overflow-hidden mb-10 relative group ring-1 ring-white/10">
@@ -283,6 +282,7 @@ const dragStyle = computed(() => {
             :value="audioStore.progress"
             class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
             @input="handleSeekInput"
+            @touchstart.stop
           />
         </div>
         <div class="flex justify-between text-xs text-white/40 font-mono mt-3 tracking-wider">
