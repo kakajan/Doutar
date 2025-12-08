@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { useAudioStore } from '@/stores/audio'
-import DustCanvas from './DustCanvas.vue'
+
 
 const audioStore = useAudioStore()
 const visualizerContainer = ref<HTMLElement | null>(null)
@@ -178,8 +178,8 @@ const dragStyle = computed(() => {
     id="fs-player"
     class="fixed inset-0 bg-neutral-900/95 backdrop-blur-3xl flex flex-col items-center justify-center transition-all duration-500"
     :class="isOpen ? 'translate-y-0 opacity-100 visible' : 'translate-y-full opacity-0 invisible'"
-    :style="isOpen ? dragStyle : {}"
-    style="z-index: 99999"
+    :style="isOpen ? dragStyle : { willChange: 'transform' }"
+    style="z-index: 99999; will-change: transform"
     dir="ltr"
     @touchstart="handleTouchStart"
     @touchmove.passive="handleTouchMove"
@@ -214,9 +214,6 @@ const dragStyle = computed(() => {
     
     <!-- Hidden container for AudioMotion analyzer -->
     <div ref="visualizerContainer" class="hidden"></div>
-
-    <!-- Full Screen Dust Canvas -->
-    <DustCanvas id="fs-dust-canvas" :particle-count="50" />
 
     <!-- Close Button -->
     <button
