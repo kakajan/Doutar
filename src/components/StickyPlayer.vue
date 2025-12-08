@@ -49,7 +49,7 @@ function handleSeekInput(event: Event) {
       <div class="container mx-auto max-w-5xl flex items-center justify-between gap-4">
         <!-- Track Info (Left) -->
         <div class="flex items-center gap-3 min-w-0 flex-1">
-          <div class="w-12 h-12 rounded-lg bg-neutral-200 overflow-hidden shrink-0 relative group cursor-pointer" @click="audioStore.openFullscreen">
+          <div class="hidden sm:block w-12 h-12 rounded-lg bg-neutral-200 overflow-hidden shrink-0 relative group cursor-pointer" @click="audioStore.openFullscreen">
             <img
               src="/assets/img/music-cover.webp"
               alt="Cover"
