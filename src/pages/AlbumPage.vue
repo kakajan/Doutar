@@ -136,7 +136,7 @@ function playAll() {
             <span class="hidden md:block w-1 h-1 bg-neutral-300 rounded-full mt-2"></span>
             <span>44 Tracks</span>
             <span class="hidden md:block w-1 h-1 bg-neutral-300 rounded-full mt-2"></span>
-            <span>Turkmen Folk Fusion</span>
+            <span>MIRAS SAHRASY</span>
             <span class="hidden md:block w-1 h-1 bg-neutral-300 rounded-full mt-2"></span>
             <span>2025</span>
           </div>
