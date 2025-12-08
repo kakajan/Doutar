@@ -4,6 +4,11 @@ import { useAudioStore } from '@/stores/audio'
 import DustCanvas from './DustCanvas.vue'
 
 const audioStore = useAudioStore()
+const visualizerContainer = ref<HTMLElement | null>(null)
+const pulseScale = ref(1.1)
+const pulseOpacity = ref(0.3)
+let animationFrameId: number | null = null
+
 
 const isOpen = computed(() => audioStore.isFullscreen)
 
@@ -108,17 +113,52 @@ function handleMouseUp() {
   dragOffset.value = 0
 }
 
-onMounted(() => {
+onMounted(async () => {
   document.addEventListener('keydown', handleKeydown)
   document.addEventListener('mousemove', handleMouseMove)
   document.addEventListener('mouseup', handleMouseUp)
+
+  // Initialize Audio Visualizer
+  if (visualizerContainer.value) {
+    await audioStore.initAudioMotion(visualizerContainer.value)
+    // Ensure we are connected if already playing
+    if (audioStore.audioElement) {
+       await audioStore.connectToVisualizer()
+    }
+  }
+  
+  startAnimation()
 })
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeydown)
   document.removeEventListener('mousemove', handleMouseMove)
   document.removeEventListener('mouseup', handleMouseUp)
+  
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId)
+    animationFrameId = null
+  }
 })
+
+function startAnimation() {
+  const animate = () => {
+    if (audioStore.isPlaying) {
+      const energy = audioStore.getEnergy() // 0 to ~1
+      // Map energy to scale and opacity
+      // Base scale 1.1, max 1.25
+      pulseScale.value = 1.1 + (energy * 0.15)
+      // Base opacity 0.3, max 0.8
+      pulseOpacity.value = 0.3 + (energy * 0.5)
+    } else {
+      // Smooth return to base if paused
+      pulseScale.value = 1.1
+      pulseOpacity.value = 0.3
+    }
+    animationFrameId = requestAnimationFrame(animate)
+  }
+  animate()
+}
 
 const dragStyle = computed(() => {
   if (dragOffset.value > 0) {
@@ -160,8 +200,19 @@ const dragStyle = computed(() => {
     <!-- Dynamic Pulse Background -->
     <div
       id="fs-pulse-bg"
-      class="absolute inset-0 z-0 pointer-events-none mix-blend-screen opacity-50 transition-opacity duration-300"
+      class="absolute inset-0 z-0 pointer-events-none mix-blend-screen transition-opacity duration-75 scale-110"
+      :style="{
+        backgroundImage: `url('/assets/img/music-cover.webp')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        filter: 'blur(60px)',
+        transform: `scale(${pulseScale})`,
+        opacity: pulseOpacity
+      }"
     ></div>
+    
+    <!-- Hidden container for AudioMotion analyzer -->
+    <div ref="visualizerContainer" class="hidden"></div>
 
     <!-- Full Screen Dust Canvas -->
     <DustCanvas id="fs-dust-canvas" :particle-count="50" />
@@ -292,3 +343,7 @@ const dragStyle = computed(() => {
     </div>
   </div>
 </template>
+
+<style>
+
+</style>

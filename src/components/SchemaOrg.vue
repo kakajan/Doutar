@@ -36,10 +36,15 @@ let scriptElement: HTMLScriptElement | null = null
 
 onMounted(() => {
   // Create and inject the JSON-LD script
-  scriptElement = document.createElement('script')
-  scriptElement.type = 'application/ld+json'
-  scriptElement.textContent = JSON.stringify(schemaData.value)
-  document.head.appendChild(scriptElement)
+  try {
+    scriptElement = document.createElement('script')
+    scriptElement.type = 'application/ld+json'
+    scriptElement.textContent = JSON.stringify(schemaData.value)
+    document.head.appendChild(scriptElement)
+    console.log('Schema.org JSON-LD injected successfully')
+  } catch (e) {
+    console.error('Error injecting Schema.org JSON-LD:', e)
+  }
 })
 
 onUnmounted(() => {

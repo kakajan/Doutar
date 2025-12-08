@@ -335,6 +335,7 @@ export const useAudioStore = defineStore('audio', () => {
     
     // Visualizer
     initAudioMotion,
+    connectToVisualizer,
     getEnergy,
     getBars,
     

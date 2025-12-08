@@ -45,7 +45,7 @@ onUnmounted(() => {
       @click="goToDownload"
       class="text-xs font-bold tracking-widest uppercase border border-black/10 px-6 py-2 rounded-full hover:bg-black hover:text-white transition-all duration-300 cursor-pointer"
     >
-      دانلود آلبوم
+      دانلود
     </button>
   </nav>
 </template>
