@@ -12,6 +12,12 @@ const routes = [
     path: '/album/:id',
     name: 'album',
     component: AlbumPage
+  },
+  // Catch-all route: redirect all unknown paths (including /npm/*) to home
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    redirect: '/'
   }
 ]
 

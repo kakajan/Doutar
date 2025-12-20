@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Block indexing of npm packages and CDN proxy paths
+Disallow: /npm/
+Disallow: /npm/*
+
+# Sitemap location
+Sitemap: https://doutar.ir/sitemap.xml
