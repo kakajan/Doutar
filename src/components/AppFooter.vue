@@ -4,111 +4,118 @@
 <template>
   <footer
     id="download"
-    class="py-20 text-center relative z-10 bg-linear-to-t from-black/5 to-transparent"
+    class="py-20 text-center relative z-10 bg-linear-to-t from-black/5 to-transparent border-t border-black/5"
   >
     <div class="container mx-auto flex flex-col items-center px-4 gap-6" id="footer-content">
+      <!-- Download Section Title -->
+      <div class="mb-4">
+        <h2 class="text-2xl md:text-3xl font-bold font-body text-neutral-900 mb-2">
+          دانلود کامل آلبوم‌ها
+        </h2>
+        <p class="text-neutral-600 text-sm font-normal">
+          دانلود مستقیم تمامی قطعات با کیفیت استودیویی ۳۲۰ در قالب فایل فشرده
+        </p>
+      </div>
+
       <!-- Download Buttons -->
-      <a
-        href="/assets/Unity-Aytronic.zip"
-        download
-        class="dust-btn relative inline-block bg-black cursor-pointer text-white font-bold py-5 px-12 text-sm tracking-widest uppercase hover:bg-gold hover:text-black transition-all duration-300 shadow-xl shadow-black/10 rounded-full"
-      >
-        <div class="play-btn-dust-container">
-          <div class="play-btn-dust" style="left: 20%; animation-delay: 0s; --tx: -10px"></div>
-          <div class="play-btn-dust" style="left: 50%; animation-delay: 0.5s; --tx: 5px"></div>
-          <div class="play-btn-dust" style="left: 80%; animation-delay: 1s; --tx: -5px"></div>
-          <div class="play-btn-dust" style="left: 35%; animation-delay: 0.2s; --tx: 10px"></div>
-          <div class="play-btn-dust" style="left: 65%; animation-delay: 0.7s; --tx: -8px"></div>
-        </div>
-        <span class="relative z-10">Download Full Album (Unity)</span>
-      </a>
-      
-      <a
-        href="/assets/CHAP-Aytronic.zip"
-        download
-        class="dust-btn mt-3 relative inline-block bg-black cursor-pointer text-white font-bold py-5 px-12 text-sm tracking-widest uppercase hover:bg-gold hover:text-black transition-all duration-300 shadow-xl shadow-black/10 rounded-full"
-      >
-        <div class="play-btn-dust-container">
-          <div class="play-btn-dust" style="left: 20%; animation-delay: 0s; --tx: -10px"></div>
-          <div class="play-btn-dust" style="left: 50%; animation-delay: 0.5s; --tx: 5px"></div>
-          <div class="play-btn-dust" style="left: 80%; animation-delay: 1s; --tx: -5px"></div>
-          <div class="play-btn-dust" style="left: 35%; animation-delay: 0.2s; --tx: 10px"></div>
-          <div class="play-btn-dust" style="left: 65%; animation-delay: 0.7s; --tx: -8px"></div>
-        </div>
-        <span class="relative z-10">Download Full Album (CHAP!)</span>
-      </a>
+      <div class="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4">
+        <a
+          href="/assets/Unity-Aytronic.zip"
+          download
+          class="inline-flex items-center gap-3 bg-neutral-900 cursor-pointer text-white font-bold py-4 px-8 text-sm tracking-wider uppercase hover:bg-gold hover:text-neutral-950 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 rounded-full"
+        >
+          <i class="fas fa-download text-gold"></i>
+          <span>دانلود آلبوم اتحاد (Unity)</span>
+        </a>
+        
+        <a
+          href="/assets/CHAP-Aytronic.zip"
+          download
+          class="inline-flex items-center gap-3 bg-neutral-900 cursor-pointer text-white font-bold py-4 px-8 text-sm tracking-wider uppercase hover:bg-gold hover:text-neutral-950 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 rounded-full"
+        >
+          <i class="fas fa-download text-gold"></i>
+          <span>دانلود آلبوم چاپ! (CHAP!)</span>
+        </a>
+
+        <a
+          href="/assets/Ayrildim-Aytronic.zip"
+          download
+          class="inline-flex items-center gap-3 bg-neutral-900 cursor-pointer text-white font-bold py-4 px-8 text-sm tracking-wider uppercase hover:bg-gold hover:text-neutral-950 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 rounded-full"
+        >
+          <i class="fas fa-download text-gold"></i>
+          <span>دانلود آلبوم جدا ماندم (Ayrildim)</span>
+        </a>
+      </div>
 
       <!-- Social Links -->
-      <div class="mt-12 flex justify-center gap-6">
+      <div class="mt-8 flex justify-center gap-6">
         <a
           href="https://www.linkedin.com/in/usher-ir"
           target="_blank"
-          class="text-neutral-400 hover:text-gold transition-colors duration-300"
-          aria-label="LinkedIn profile"
+          rel="noopener noreferrer"
+          class="text-neutral-600 hover:text-dark-gold transition-colors duration-300 p-2"
+          aria-label="پروفایل لینکدین"
         >
           <i class="fab fa-linkedin text-2xl"></i>
         </a>
         <a
           href="https://github.com/kakajan"
           target="_blank"
-          class="text-neutral-400 hover:text-gold transition-colors duration-300"
-          aria-label="GitHub profile"
+          rel="noopener noreferrer"
+          class="text-neutral-600 hover:text-dark-gold transition-colors duration-300 p-2"
+          aria-label="پروفایل گیت‌هاب"
         >
           <i class="fab fa-github text-2xl"></i>
         </a>
         <a
           href="https://www.instagram.com/usher_vocal"
           target="_blank"
-          class="text-neutral-400 hover:text-gold transition-colors duration-300"
-          aria-label="Instagram profile"
+          rel="noopener noreferrer"
+          class="text-neutral-600 hover:text-dark-gold transition-colors duration-300 p-2"
+          aria-label="صفحه اینستاگرام"
         >
           <i class="fab fa-instagram text-2xl"></i>
         </a>
         <a
-          href="https://t.me/usher_art"
+          href="https://t.me/usherArt"
           target="_blank"
-          class="text-neutral-400 hover:text-gold transition-colors duration-300"
-          aria-label="Telegram channel"
+          rel="noopener noreferrer"
+          class="text-neutral-600 hover:text-dark-gold transition-colors duration-300 p-2"
+          aria-label="کانال تلگرام"
         >
           <i class="fab fa-telegram text-2xl"></i>
         </a>
       </div>
 
       <!-- SEO Content Section -->
-      <div class="mt-16 max-w-3xl mx-auto text-center text-neutral-500 text-sm leading-relaxed">
-        <h3 class="text-lg font-bold text-neutral-700 mb-4">
-          درباره آلبوم میراث صحرا
+      <div class="mt-12 max-w-3xl mx-auto text-center text-neutral-600 text-sm leading-relaxed">
+        <h3 class="text-base font-bold text-neutral-800 mb-3">
+          درباره پروژه موسیقی میراث صحرا
         </h3>
-        <p class="mb-4">
-          آلبوم <strong>میراث صحرا</strong> مجموعه‌ای منحصربه‌فرد از
+        <p class="mb-3">
+          مجموعه <strong>میراث صحرا</strong> گزیده‌ای منحصربه‌فرد از
           <strong>آهنگ‌های ترکمنی جدید</strong> است که با الهام از
           <strong>اشعار مختومقلی فراغی</strong>، شاعر نامدار ترکمن، تولید شده
-          است. این آلبوم شامل ۴۴ قطعه موسیقی با کیفیت بالا (۳۲۰ kbps) است که
-          تلفیقی از <strong>دوتار ترکمنی</strong>، <strong>قیجیق</strong> و
-          <strong>موسیقی الکترونیک</strong> را ارائه می‌دهد.
+          است. این مجموعه در قالب آلبوم‌های «اتحاد»، «چاپ!» و اثر ویژه «جدا ماندم» شامل ۵۸ قطعه با کیفیت استودیویی (۳۲۰ kbps) است که
+          تلفیقی از نوای <strong>دوتار ترکمنی</strong>، <strong>قیجیق</strong>، نغمه‌های سوزناک در وصف <strong>مادر</strong> و <strong>دلتنگی و جدایی از مادر</strong> و
+          تنظیم‌های <strong>مدرن و الکترونیک</strong> را ارائه می‌دهد.
         </p>
-        <p class="mb-4">
-          <strong>مختومقلی فراغی</strong> (Magtymguly Pyragy) شاعر بزرگ قرن
-          هجدهم ترکمن است که اشعار او در فرهنگ ترکمن صحرا جایگاه ویژه‌ای دارد.
-          <strong>دانلود آهنگ ترکمنی</strong> با اشعار او، سفری است به قلب
-          تاریخ و فرهنگ غنی ترکمن.
+        <p class="mb-3">
+          <strong>مختومقلی فراغی</strong> (Magtymguly Pyragy) شاعر و اندیشمند نامدار قرن هجدهم
+          ترکمن است که آثار او از جمله سروده‌های پرشور در ستایش ایل و سروده‌های غمگین در فراق مادرش (اورازگل)، شناسنامه هویت و ادبیات ترکمن‌صحراست.
         </p>
-        <p class="mb-4">
-          برای <strong>دانلود رایگان آهنگ ترکمنی</strong> کافیست روی هر قطعه
-          کلیک کنید یا کل آلبوم را یکجا دانلود نمایید.
-        </p>
-        <p class="text-xs text-neutral-400 mt-6 flex items-center justify-center gap-2">
-          <i class="fas fa-robot"></i>
-          <span>این آلبوم با کمک <strong>هوش مصنوعی</strong> در تنظیم و تولید موسیقی ساخته شده است.</span>
+        <p class="text-xs text-neutral-500 mt-4 flex items-center justify-center gap-2">
+          <i class="fas fa-compact-disc text-gold"></i>
+          <span>تمامی ۵۸ قطعه برای شنیدن آنلاین و دانلود رایگان در دسترس علاقه‌مندان قرار دارد.</span>
         </p>
       </div>
 
       <!-- Credits -->
-      <div class="mt-12 mb-35 text-[10px] text-neutral-400 font-epic tracking-widest uppercase">
+      <div class="mt-8 mb-12 text-xs text-neutral-500 font-epic tracking-widest uppercase">
         PRODUCED BY
-        <a href="https://aytronic.ir" class="hover:text-gold transition-colors">AYTRONIC</a>
+        <a href="https://aytronic.ir" class="hover:text-dark-gold font-bold transition-colors">AYTRONIC</a>
         | POWERED BY
-        <a href="https://x-dev.org" class="hover:text-gold transition-colors">X-DEV ACADEMY</a>
+        <a href="https://x-dev.org" class="hover:text-dark-gold font-bold transition-colors">X-DEV ACADEMY</a>
       </div>
     </div>
   </footer>

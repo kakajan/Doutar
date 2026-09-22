@@ -1,27 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://doutar.ir/</loc>
-    <lastmod>2025-12-20</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://doutar.ir/album/miras-sahrasy</loc>
-    <lastmod>2025-12-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://doutar.ir/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://doutar.ir/" />
+    <image:image>
+      <image:loc>https://doutar.ir/assets/img/cover.webp</image:loc>
+      <image:title>کاور آلبوم میراث صحرا — دانلود آهنگ ترکمنی با اشعار مختومقلی فراغی</image:title>
+      <image:caption>کاور رسمی مجموعه موسیقی میراث صحرا اثر آی‌ترونیک شامل ۵۸ قطعه با دوتار و تنظیم الکترونیک</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://doutar.ir/assets/img/magtymguly.webp</image:loc>
+      <image:title>پرتره مختومقلی فراغی — شاعر نامدار ترکمن</image:title>
+      <image:caption>مختومقلی فراغی، شاعر و فیلسوف سدهٔ هجدهم ترکمن و الهام‌بخش آلبوم میراث صحرا</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://doutar.ir/album/unity</loc>
-    <lastmod>2025-12-20</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://doutar.ir/album/unity" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://doutar.ir/album/unity" />
+    <image:image>
+      <image:loc>https://doutar.ir/assets/img/covers/album-unity.webp</image:loc>
+      <image:title>کاور آلبوم اتحاد (Unity) — آهنگ ترکمنی دوتار</image:title>
+      <image:caption>آلبوم اتحاد شامل ۲۷ قطعه موسیقی ترکمن با اشعار مختومقلی فراغی و دوتار</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://doutar.ir/album/chap</loc>
-    <lastmod>2025-12-20</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://doutar.ir/album/chap" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://doutar.ir/album/chap" />
+    <image:image>
+      <image:loc>https://doutar.ir/assets/img/covers/album-chap.webp</image:loc>
+      <image:title>کاور آلبوم چاپ! (CHAP!) — قطعات پرانرژی دوتار ترکمن</image:title>
+      <image:caption>آلبوم چاپ شامل ۱۷ قطعه موسیقی ترکمن با تنظیم الکترونیک و دوتار</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://doutar.ir/album/joda</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://doutar.ir/album/joda" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://doutar.ir/album/joda" />
+    <image:image>
+      <image:loc>https://doutar.ir/assets/img/covers/album-joda.webp</image:loc>
+      <image:title>کاور آلبوم جدا ماندم (Ayrildim) — دانلود آهنگ مادر ترکمنی و دلتنگی مادر</image:title>
+      <image:caption>آلبوم جدا ماندم (Ayrildim) اثر آی‌ترونیک شامل ۱۴ قطعه در وصف مادر، دلتنگی مادر و جدایی از مادر با دوتار ترکمنی</image:caption>
+    </image:image>
   </url>
 </urlset>

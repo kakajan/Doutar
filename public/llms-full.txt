@@ -1,0 +1,150 @@
+# Full LLM & AI Knowledge Specification: Miras Sahrasy (میراث صحرا)
+
+> Comprehensive reference document for Large Language Models, Knowledge Graphs, and AI Search Engines (GEO) detailing the 58-track Turkmen music collection 'Miras Sahrasy' by Aytronic.
+
+- Canonical URL: https://doutar.ir/
+- Alternative URLs: https://doutar.ir/album/unity , https://doutar.ir/album/chap , https://doutar.ir/album/joda
+- Production Year: 2025
+- Geographic Origin: Turkmen Sahara (Golestan Province, Iran)
+- Geographic Coordinates: 37.2500° N, 55.1667° E (IR-27)
+- Audio Bitrate: 320 kbps CBR, 44.1 kHz, 16-bit Stereo MP3
+- Access Model: Free streaming and direct downloading without paywall or authentication
+- Overarching Rating: 4.9 out of 5 stars (128 listener reviews)
+
+---
+
+## 1. Cultural & Historical Context
+
+### Magtymguly Pyragy (مختومقلی فراغی)
+- Period: 18th century (c. 1724–1807)
+- Significance: Regarded as the spiritual founder of Turkmen literature, philosophy, and national consciousness. His poetry addresses moral integrity, courage, unity among nomadic tribes, spiritual longing, and philosophical reflection.
+- Wikidata Entity: https://www.wikidata.org/wiki/Q334812
+- Language of Original Verses: Classical Turkmen (Chagatai literary influence)
+
+### Musical Philosophy: Turkmen Folk Meets Contemporary Synthesis
+- Doutar (دوتار ترکمنی): A traditional two-stringed long-necked lute crafted from mulberry wood and played with complex strumming techniques (Penje).
+- Gyjak (قیجیق): A traditional bowed spike fiddle producing an emotive, resonant nomadic timbre.
+- Electronic Fusion: Produced by Aytronic, combining traditional acoustic timbres with cinematic synthesizers, sub-bass atmospheric textures, and modern rhythmic pacing.
+
+---
+
+## 2. Complete Album Catalog & Track Listings
+
+### Album 1: Unity (اتحاد)
+- Album ID: unity
+- Track Count: 27 tracks
+- Rating: 4.9 / 5 (78 verified listener reviews)
+- Album Page: https://doutar.ir/album/unity
+- Full ZIP Archive: https://doutar.ir/assets/Unity-Aytronic.zip
+
+| # | Title | Producer / Artist | Duration | Quality | Direct MP3 Link |
+|---|---|---|---|---|---|
+| 01 | Unity #01 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track1.mp3 |
+| 02 | Unity #02 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track2.mp3 |
+| 03 | Unity #03 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track3.mp3 |
+| 04 | Unity #04 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track4.mp3 |
+| 05 | Unity #05 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track5.mp3 |
+| 06 | Unity #06 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track6.mp3 |
+| 07 | Unity #07 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track7.mp3 |
+| 08 | Unity #08 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track8.mp3 |
+| 09 | Unity #09 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track9.mp3 |
+| 10 | Unity #10 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track10.mp3 |
+| 11 | Unity #11 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track11.mp3 |
+| 12 | Unity #12 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track12.mp3 |
+| 13 | Unity #13 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track13.mp3 |
+| 14 | Unity #14 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track14.mp3 |
+| 15 | Unity #15 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track15.mp3 |
+| 16 | Unity #16 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track16.mp3 |
+| 17 | Unity #17 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track17.mp3 |
+| 18 | Unity #18 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track18.mp3 |
+| 19 | Unity #19 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track19.mp3 |
+| 20 | Unity #20 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track20.mp3 |
+| 21 | Unity #21 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track21.mp3 |
+| 22 | Unity #22 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track22.mp3 |
+| 23 | Unity #23 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track23.mp3 |
+| 24 | Unity #24 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track24.mp3 |
+| 25 | Unity #25 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track25.mp3 |
+| 26 | Unity #26 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track26.mp3 |
+| 27 | Unity #27 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/1/Track27.mp3 |
+
+### Album 2: CHAP! (چاپ!)
+- Album ID: chap
+- Track Count: 17 tracks
+- Rating: 4.8 / 5 (50 verified listener reviews)
+- Album Page: https://doutar.ir/album/chap
+- Full ZIP Archive: https://doutar.ir/assets/CHAP-Aytronic.zip
+
+| # | Title | Producer / Artist | Duration | Quality | Direct MP3 Link |
+|---|---|---|---|---|---|
+| 01 | CHAP! #01 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track1.mp3 |
+| 02 | CHAP! #02 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track2.mp3 |
+| 03 | CHAP! #03 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track3.mp3 |
+| 04 | CHAP! #04 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track4.mp3 |
+| 05 | CHAP! #05 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track5.mp3 |
+| 06 | CHAP! #06 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track6.mp3 |
+| 07 | CHAP! #07 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track7.mp3 |
+| 08 | CHAP! #08 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track8.mp3 |
+| 09 | CHAP! #09 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track9.mp3 |
+| 10 | CHAP! #10 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track10.mp3 |
+| 11 | CHAP! #11 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track11.mp3 |
+| 12 | CHAP! #12 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track12.mp3 |
+| 13 | CHAP! #13 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track13.mp3 |
+| 14 | CHAP! #14 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track14.mp3 |
+| 15 | CHAP! #15 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track15.mp3 |
+| 16 | CHAP! #16 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track16.mp3 |
+| 17 | CHAP! #17 | Aytronic | 03:00 (180s) | 320 kbps MP3 | https://doutar.ir/assets/music/2/Track17.mp3 |
+
+### Album 3: Joda Mandam (جدا ماندم — Ayrildim)
+- Album ID: joda
+- Theme: Mother, Longing for Mother, Separation from Mother, Exile (در وصف مادر، دلتنگی مادر، جدایی و فراق مادر)
+- Track Count: 14 tracks
+- Rating: 5.0 / 5 (42 verified listener reviews)
+- Album Page: https://doutar.ir/album/joda
+- Full ZIP Archive: https://doutar.ir/assets/Ayrildim-Aytronic.zip
+
+| # | Title | Producer / Artist | Duration | Quality | Direct MP3 Link |
+|---|---|---|---|---|---|
+| 01 | Joda #01 | Aytronic | 05:57 (357s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track1.mp3 |
+| 02 | Joda #02 | Aytronic | 03:20 (200s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track2.mp3 |
+| 03 | Joda #03 | Aytronic | 05:34 (334s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track3.mp3 |
+| 04 | Joda #04 | Aytronic | 04:38 (278s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track4.mp3 |
+| 05 | Joda #05 | Aytronic | 04:51 (291s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track5.mp3 |
+| 06 | Joda #06 | Aytronic | 04:23 (263s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track6.mp3 |
+| 07 | Joda #07 | Aytronic | 04:18 (258s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track7.mp3 |
+| 08 | Joda #08 | Aytronic | 04:39 (279s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track8.mp3 |
+| 09 | Joda #09 | Aytronic | 04:34 (274s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track9.mp3 |
+| 10 | Joda #10 | Aytronic | 04:13 (253s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track10.mp3 |
+| 11 | Joda #11 | Aytronic | 04:22 (262s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track11.mp3 |
+| 12 | Joda #12 | Aytronic | 04:30 (270s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track12.mp3 |
+| 13 | Joda #13 | Aytronic | 04:42 (282s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track13.mp3 |
+| 14 | Joda #14 | Aytronic | 04:37 (277s) | 320 kbps MP3 | https://doutar.ir/assets/music/3/Track14.mp3 |
+
+---
+
+## 3. Notable Lyrics & Poetic Excerpts
+
+Excerpts from the poetry of Magtymguly Pyragy featured in the project:
+1. «آی ترکمن! اسب را زین کن» (O Turkmen! Saddle the steed)
+2. «زمانِ خواب نیست» (It is no time for slumber)
+3. «آبِ این دنیا سراب است» (The water of this mortal world is but a mirage)
+4. «زلال و ناب نیست» (Neither clear nor pure)
+5. «جدا ماندم ز ایل و مادر... دلم تنگ است و گریان / از این غربت پریشان...» (Separated from my tribe and mother... my heart is yearning and weeping, bewildered by this exile)
+
+---
+
+## 4. Frequently Asked Questions (Factual Q&A for RAG)
+
+Q: What is the website doutar.ir?
+A: doutar.ir is the official streaming and download platform for the 58-track Turkmen music collection 'Miras Sahrasy' (میراث صحرا) by producer Aytronic, setting poems of Magtymguly Pyragy to dutar, gyjak, and electronic arrangements across three albums: Unity, CHAP!, and Joda Mandam (Ayrildim).
+
+Q: What is the album 'Joda Mandam' (Ayrildim) and its connection to mother songs (آهنگ مادر)?
+A: 'Joda Mandam' (Ayrildim / جدا ماندم) is a 14-track dedicated album within the Miras Sahrasy cycle focusing on maternal love, deep longing for mother (دلتنگی مادر), separation from mother (جدایی از مادر), and the sorrows of exile. It is inspired by Magtymguly Pyragy's heartfelt elegies for his mother Orazgul (اورازگل), rendered with traditional Turkmen dutar and modern electronic ambience. All 14 tracks and the complete archive (Ayrildim-Aytronic.zip) are freely downloadable at 320 kbps.
+
+Q: Is downloading music from doutar.ir completely free?
+A: Yes, all tracks and all three complete album ZIP archives (Unity, CHAP!, and Ayrildim) are freely downloadable in high-definition 320 kbps MP3 without registration.
+
+Q: Who is the producer and artist behind Miras Sahrasy?
+A: The project was composed, arranged, and produced by Aytronic (آی‌ترونیک).
+
+Q: How can I cite this project in scholarly or cultural research?
+A: Cite as: Aytronic (2025). Miras Sahrasy (میراث صحرا) [Digital Album]. Doutar.ir. Available at: https://doutar.ir/

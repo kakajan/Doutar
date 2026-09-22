@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, watch, nextTick, onMounted } from 'vue'
 import { useAudioStore } from '@/stores/audio'
 import { musicGroups } from '@/data/tracks'
 import TrackCard from './TrackCard.vue'
@@ -15,17 +15,20 @@ const updateGlider = async () => {
   
   const activeTab = tabsRef.value.querySelector('.music-tab.active') as HTMLElement
   if (activeTab) {
+    // Use bounding rects (not offsetLeft) so the glider works correctly in RTL
+    // where offsetLeft can be negative or measured from the wrong edge.
+    const tabsRect = tabsRef.value.getBoundingClientRect()
+    const tabRect = activeTab.getBoundingClientRect()
     gliderStyle.value = {
-      width: `${activeTab.offsetWidth}px`,
-      transform: `translateX(${activeTab.offsetLeft}px)`
+      width: `${tabRect.width}px`,
+      transform: `translateX(${tabRect.left - tabsRect.left}px)`
     }
   }
 }
 
+// Initialize glider on mount and when the active group changes
+onMounted(updateGlider)
 watch(() => audioStore.activeGroupId, updateGlider)
-
-// Initialize glider on mount
-setTimeout(updateGlider, 100)
 
 const isTransitioning = ref(false)
 const transitionDirection = ref(0)
@@ -50,23 +53,24 @@ function switchGroup(groupId: string) {
 </script>
 
 <template>
-  <section id="music-hall" class="py-32 relative z-10">
+  <section id="quick-listen" class="py-32 relative z-10">
     <div class="container mx-auto px-6 max-w-6xl">
       <!-- Header -->
       <div
         id="music-header"
-        class="flex items-end text-center justify-between mb-20 border-b border-black/5 pb-4"
+        class="flex flex-col md:flex-row md:items-end text-center md:text-right justify-between mb-12 md:mb-20 border-b border-black/5 pb-4 gap-3"
       >
         <div>
-          <h2 class="text-4xl text-black font-body font-bold">
-            دانلود آهنگ ترکمنی جدید ۱۴۰۴
+          <h2 class="text-2xl md:text-4xl text-neutral-900 font-body font-bold">
+            پخش آنلاین آهنگ ترکمنی
           </h2>
-          <p class="text-neutral-500 mt-2 text-sm font-light">
-            <strong>اشعار مختومقلی فراغی</strong> با دوتار و موسیقی الکترونیک | کیفیت ۳۲۰
+          <p class="text-neutral-600 mt-2 text-sm font-normal">
+            <strong>اشعار مختومقلی فراغی</strong> با دوتار و تنظیم الکترونیک | کیفیت ۳۲۰
           </p>
         </div>
-        <div id="track-counter" class="text-gold font-mono text-xs hidden md:block">
-          /// {{ audioStore.activeGroup.name }} • {{ audioStore.tracks.length.toString().padStart(2, '0') }} TRACKS
+        <div id="track-counter" class="text-neutral-700 font-body text-sm font-medium hidden md:flex items-center gap-2">
+          <span class="text-dark-gold font-bold">{{ audioStore.activeGroup.name }}</span>
+          <span>({{ audioStore.tracks.length }} قطعه)</span>
         </div>
       </div>
 
@@ -107,9 +111,10 @@ function switchGroup(groupId: string) {
         }"
       >
         <TrackCard
-          v-for="track in audioStore.tracks"
+          v-for="(track, index) in audioStore.tracks"
           :key="track.id"
           :track="track"
+          :index="index"
         />
       </div>
     </div>

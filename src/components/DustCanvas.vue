@@ -13,6 +13,7 @@ const canvasRef = ref<HTMLCanvasElement | null>(null)
 let ctx: CanvasRenderingContext2D | null = null
 let particles: Particle[] = []
 let animationId: number | null = null
+let isPageVisible = true
 let width = 0
 let height = 0
 
@@ -61,9 +62,15 @@ function initParticles() {
 }
 
 function resize() {
-  if (!canvasRef.value) return
-  width = canvasRef.value.width = window.innerWidth
-  height = canvasRef.value.height = window.innerHeight
+  if (!canvasRef.value || !ctx) return
+  // Scale the backing store by devicePixelRatio for crisp rendering,
+  // while keeping particle math in CSS pixels.
+  const dpr = window.devicePixelRatio || 1
+  width = window.innerWidth
+  height = window.innerHeight
+  canvasRef.value.width = Math.floor(width * dpr)
+  canvasRef.value.height = Math.floor(height * dpr)
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
   initParticles()
 }
 
@@ -87,23 +94,62 @@ function animate() {
     ctx!.fill()
   })
   
-  animationId = requestAnimationFrame(animate)
+  // Pause rendering when the tab is hidden to save CPU/battery
+  if (isPageVisible) {
+    animationId = requestAnimationFrame(animate)
+  } else {
+    animationId = null
+  }
 }
+
+function handleVisibility() {
+  isPageVisible = !document.hidden
+  if (isPageVisible && animationId === null) {
+    animate()
+  }
+}
+
+let idleCallbackId: number | null = null
+let startTimeoutId: number | null = null
 
 onMounted(() => {
   if (canvasRef.value) {
+    // Respect reduced motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return
+    }
+
     ctx = canvasRef.value.getContext('2d')
-    resize()
-    animate()
-    window.addEventListener('resize', resize)
+    
+    // Defer canvas startup to ensure initial paint is prioritized
+    const startCanvas = () => {
+      resize()
+      animate()
+      window.addEventListener('resize', resize, { passive: true })
+      document.addEventListener('visibilitychange', handleVisibility)
+    }
+
+    if ('requestIdleCallback' in window) {
+      idleCallbackId = (window as any).requestIdleCallback(startCanvas, { timeout: 1500 })
+    } else {
+      startTimeoutId = setTimeout(startCanvas, 1200) as unknown as number
+    }
   }
 })
 
 onUnmounted(() => {
+  if (idleCallbackId !== null && 'cancelIdleCallback' in window) {
+    (window as any).cancelIdleCallback(idleCallbackId)
+  }
+  if (startTimeoutId !== null) {
+    clearTimeout(startTimeoutId)
+  }
   if (animationId) {
     cancelAnimationFrame(animationId)
+    animationId = null
   }
   window.removeEventListener('resize', resize)
+  document.removeEventListener('visibilitychange', handleVisibility)
 })
 </script>
 

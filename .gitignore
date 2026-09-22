@@ -7,3 +7,17 @@ build/
 *.log
 assets/music/
 assets/MirasSahrasy-Aytronic.zip
+
+# AI & Editor configs
+.agent/
+.agents/
+.claude/
+.codex/
+.cursor/
+.dsh/
+.gemini/
+.grok/
+.hermes/
+.impeccable/
+.kiro/
+.opencode/

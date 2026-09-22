@@ -12,6 +12,9 @@ export const useAudioStore = defineStore('audio', () => {
   const duration = ref(0)
   const isLoading = ref(false)
   const isFullscreen = ref(false)
+  const volume = ref(0.9)
+  const muted = ref(false)
+  const isRepeat = ref(false)
   
   // Audio element (shallow to avoid deep reactivity on DOM element)
   const audioElement = shallowRef<HTMLAudioElement | null>(null)
@@ -50,6 +53,13 @@ export const useAudioStore = defineStore('audio', () => {
   const currentTrackGroup = computed<MusicGroup | null>(() => {
     if (!currentTrackGroupId.value) return null
     return musicGroups.find(g => g.id === currentTrackGroupId.value) || null
+  })
+
+  // Get current track/album cover image
+  const currentTrackCover = computed<string>(() => {
+    if (currentTrack.value?.cover) return currentTrack.value.cover
+    if (currentTrackGroup.value?.cover) return currentTrackGroup.value.cover
+    return activeGroup.value?.cover || '/assets/img/covers/album-unity.webp'
   })
   
   // Tracks for the currently playing album (for next/prev)
@@ -103,6 +113,8 @@ export const useAudioStore = defineStore('audio', () => {
     isPlaying.value = false
     currentTrackId.value = null
     currentTrackGroupId.value = null
+    currentTime.value = 0
+    duration.value = 0
     activeGroupId.value = groupId
   }
 
@@ -129,12 +141,15 @@ export const useAudioStore = defineStore('audio', () => {
     isLoading.value = true
     currentTrackId.value = trackId
     currentTrackGroupId.value = trackGroup.id
+    currentTime.value = 0
+    duration.value = 0
 
     try {
       // Create or reuse audio element
       if (!audioElement.value) {
         audioElement.value = new Audio()
         audioElement.value.crossOrigin = 'anonymous'
+        audioElement.value.volume = muted.value ? 0 : volume.value
         
         // Setup event listeners
         audioElement.value.addEventListener('timeupdate', () => {
@@ -149,8 +164,12 @@ export const useAudioStore = defineStore('audio', () => {
           if (hasNext.value) {
             const nextTrack = currentPlayingTracks.value[currentTrackIndex.value + 1]
             playTrack(nextTrack.id)
+          } else if (isRepeat.value && currentPlayingTracks.value.length > 0) {
+            // Repeat: wrap back to the first track of the album
+            playTrack(currentPlayingTracks.value[0].id)
           } else {
             isPlaying.value = false
+            currentTime.value = 0
           }
         })
         
@@ -169,7 +188,13 @@ export const useAudioStore = defineStore('audio', () => {
 
       await audioElement.value.play()
       isPlaying.value = true
-      
+
+      // Resume the analyzer's AudioContext inside the user gesture so
+      // routed audio is not left in a suspended state.
+      try {
+        await audioMotion?.audioCtx?.resume?.()
+      } catch { /* context is already running */ }
+
       // Connect to visualizer if available
       await connectToVisualizer()
       
@@ -186,9 +211,14 @@ export const useAudioStore = defineStore('audio', () => {
     isPlaying.value = false
   }
 
-  function resume() {
-    audioElement.value?.play()
-    isPlaying.value = true
+  async function resume() {
+    try {
+      await audioElement.value?.play()
+      isPlaying.value = true
+    } catch (err) {
+      console.error('Resume failed:', err)
+      isPlaying.value = false
+    }
   }
 
   function togglePlay() {
@@ -211,6 +241,8 @@ export const useAudioStore = defineStore('audio', () => {
     if (hasNext.value) {
       const next = currentPlayingTracks.value[currentTrackIndex.value + 1]
       playTrack(next.id)
+    } else if (isRepeat.value && currentPlayingTracks.value.length > 0) {
+      playTrack(currentPlayingTracks.value[0].id)
     }
   }
 
@@ -218,16 +250,53 @@ export const useAudioStore = defineStore('audio', () => {
     if (hasPrev.value) {
       const prev = currentPlayingTracks.value[currentTrackIndex.value - 1]
       playTrack(prev.id)
+    } else if (isRepeat.value && currentPlayingTracks.value.length > 0) {
+      playTrack(currentPlayingTracks.value[currentPlayingTracks.value.length - 1].id)
     }
+  }
+
+  function setVolume(value: number) {
+    volume.value = Math.min(1, Math.max(0, value))
+    if (audioElement.value) {
+      audioElement.value.volume = muted.value ? 0 : volume.value
+    }
+    if (volume.value > 0 && muted.value) {
+      muted.value = false
+      if (audioElement.value) audioElement.value.volume = volume.value
+    }
+  }
+
+  function toggleMute() {
+    muted.value = !muted.value
+    if (audioElement.value) {
+      audioElement.value.volume = muted.value ? 0 : volume.value
+    }
+  }
+
+  function toggleRepeat() {
+    isRepeat.value = !isRepeat.value
   }
 
   function openFullscreen() {
     isFullscreen.value = true
-    history.pushState({ playerOpen: true }, '', '#player')
+    if (typeof window !== 'undefined') {
+      const currentState = window.history.state || {}
+      if (window.location.hash !== '#player') {
+        window.history.pushState({ ...currentState, playerOpen: true }, '', '#player')
+      }
+    }
   }
 
   function closeFullscreen() {
     isFullscreen.value = false
+    if (typeof window !== 'undefined' && window.location.hash === '#player') {
+      if (window.history.state?.playerOpen) {
+        window.history.back()
+      } else {
+        const cleanUrl = window.location.pathname + window.location.search
+        window.history.replaceState(window.history.state, '', cleanUrl)
+      }
+    }
   }
 
   // Visualizer integration
@@ -272,15 +341,16 @@ export const useAudioStore = defineStore('audio', () => {
   }
 
   async function connectToVisualizer() {
-    if (!audioMotion || !audioElement.value) return
+    const element = audioElement.value
+    if (!audioMotion || !element) return
     
     try {
       audioMotion.disconnectInput()
       
-      let source = audioSourceMap.get(audioElement.value)
-      if (!source) {
-        source = audioMotion.audioCtx.createMediaElementSource(audioElement.value)
-        audioSourceMap.set(audioElement.value, source)
+      const existing = audioSourceMap.get(element)
+      const source = existing ?? audioMotion.audioCtx.createMediaElementSource(element)
+      if (!existing) {
+        audioSourceMap.set(element, source)
       }
       
       audioMotion.connectInput(source)
@@ -293,10 +363,6 @@ export const useAudioStore = defineStore('audio', () => {
     return audioMotion?.getEnergy() || 0
   }
 
-  function getBars(): Array<{ value: number }> {
-    return audioMotion?.getBars() || []
-  }
-
   return {
     // State
     activeGroupId,
@@ -307,6 +373,9 @@ export const useAudioStore = defineStore('audio', () => {
     duration,
     isLoading,
     isFullscreen,
+    volume,
+    muted,
+    isRepeat,
     audioElement,
     
     // Computed
@@ -314,6 +383,7 @@ export const useAudioStore = defineStore('audio', () => {
     tracks,
     currentTrack,
     currentTrackGroup,
+    currentTrackCover,
     currentPlayingTracks,
     currentTrackIndex,
     hasNext,
@@ -330,6 +400,9 @@ export const useAudioStore = defineStore('audio', () => {
     seek,
     nextTrack,
     prevTrack,
+    setVolume,
+    toggleMute,
+    toggleRepeat,
     openFullscreen,
     closeFullscreen,
     
@@ -337,7 +410,6 @@ export const useAudioStore = defineStore('audio', () => {
     initAudioMotion,
     connectToVisualizer,
     getEnergy,
-    getBars,
     
     // Helpers
     formatTime,
